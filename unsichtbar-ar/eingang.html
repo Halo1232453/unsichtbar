@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unsichtbar · Eingangsschild</title>
+<link rel="stylesheet" href="style.css">
+<script src="lib/qrcode.min.js"></script>
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  body { background: #fff; }
+  .sign { width: 210mm; height: 297mm; margin: 0 auto; padding: 22mm 20mm; background: var(--bg);
+    display: flex; flex-direction: column; }
+  .head { display: flex; justify-content: space-between; font-size: 13pt; border-bottom: 1px solid var(--ink); padding-bottom: 5mm; }
+  .sign h1 { font-size: 64pt; margin: 22mm 0 6mm; }
+  .sign .lead { font-size: 17pt; max-width: 150mm; }
+  #qr { margin: 12mm 0 6mm; width: 70mm; height: 70mm; }
+  #qr img, #qr canvas { width: 70mm !important; height: 70mm !important; }
+  .steps { font-size: 14pt; line-height: 1.7; margin-top: auto; border-top: 1px solid var(--ink); padding-top: 6mm; }
+  .url { font-size: 11pt; color: var(--grey); }
+  .noprint { max-width: 210mm; margin: 12px auto; font-size: 14px; color: var(--grey); }
+  @media print { .noprint { display: none; } }
+</style>
+</head>
+<body>
+<p class="noprint">Dieses Schild erzeugt den QR-Code automatisch aus der Adresse der Seite. Öffne es also über die echte Online-Adresse und drucke es dann (Ctrl/Cmd + P, A4, ohne Ränder).</p>
+<div class="sign">
+  <div class="head"><span>UNSICHTBAR</span><span>AR-Ausstellung</span></div>
+  <h1>Unsichtbar</h1>
+  <p class="lead">Drei Dinge, die du jeden Tag benutzt. Drei Geschichten, die man nicht sieht.</p>
+  <div id="qr"></div>
+  <div class="url" id="url"></div>
+  <div class="steps">
+    1&nbsp;&nbsp;QR-Code mit der Handykamera scannen<br>
+    2&nbsp;&nbsp;Auf «Kamera starten» tippen und Zugriff erlauben<br>
+    3&nbsp;&nbsp;Handy auf ein Plakat halten
+  </div>
+</div>
+<script>
+  const target = new URL('index.html', location.href).href;
+  new QRCode(document.getElementById('qr'), { text: target, width: 600, height: 600, colorDark: '#141414', colorLight: '#f6f4ef', correctLevel: QRCode.CorrectLevel.M });
+  document.getElementById('url').textContent = target.replace('/index.html', '/');
+</script>
+</body>
+</html>

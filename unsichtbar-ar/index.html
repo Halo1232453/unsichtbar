@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Unsichtbar · AR-Ausstellung</title>
+<link rel="stylesheet" href="style.css">
+<script src="lib/aframe-v1.5.0.min.js"></script>
+<script src="lib/mindar-image-aframe-1.2.5.prod.js"></script>
+</head>
+<body class="ar">
+
+<!-- Startbildschirm -->
+<section id="start" class="screen">
+  <div class="wrap">
+    <p class="kicker">AR-Ausstellung</p>
+    <h1>Unsichtbar</h1>
+    <p class="lead">Hinter Dingen, die wir jeden Tag benutzen, steckt eine Geschichte, die man nicht sieht. Halte dein Handy auf eines der drei Plakate.</p>
+    <hr>
+    <ol class="stations">
+      <li><span>01</span>Lithium</li>
+      <li><span>02</span>Fast Fashion</li>
+      <li><span>03</span>Kakao &amp; Kaffee</li>
+    </ol>
+    <button id="startBtn">Kamera starten</button>
+    <p class="small">Die Kamera wird nur hier im Browser verwendet, nichts wird gespeichert.<br>
+      <a href="vorschau.html">Ohne Kamera ansehen</a> · <a href="quellen.html">Quellen</a> · <a href="index.html?demo">Effekte testen</a></p>
+  </div>
+</section>
+
+<!-- Hinweis beim Suchen -->
+<div id="scanning" class="hidden">
+  <div class="frame"></div>
+  <p>Halte die Kamera auf ein Plakat</p>
+</div>
+
+<!-- Tipp, der einmal kurz erscheint -->
+<div id="hint" class="hidden">Tippe auf die Karten, die Frage oder das 3D-Objekt</div>
+
+<!-- Testmodus ohne Kamera (index.html?demo) -->
+<div id="demoBar" class="hidden">
+  <span>Test</span>
+  <button data-i="0">01</button><button data-i="1">02</button><button data-i="2">03</button>
+</div>
+
+<!-- Info-Leiste wenn ein Plakat erkannt ist -->
+<div id="bar" class="hidden">
+  <span id="barStation"></span>
+  <span id="barTitle"></span>
+  <a href="quellen.html" id="barLink">Quellen</a>
+</div>
+
+<div id="error" class="screen hidden">
+  <div class="wrap">
+    <h2>Kamera nicht verfügbar</h2>
+    <p class="lead">Erlaube den Kamerazugriff in den Browser-Einstellungen und lade die Seite neu. Die Seite muss über https geöffnet sein.</p>
+    <p class="small">iPhone: Einstellungen › Apps › Safari › Kamera › «Fragen» oder «Erlauben». Oder in Safari links in der Adressleiste auf «Aa» tippen › Website-Einstellungen › Kamera.</p>
+    <p class="small" id="errorDetail"></p>
+    <a class="btn" href="vorschau.html">Videos ohne Kamera ansehen</a>
+  </div>
+</div>
+
+<a-scene id="scene"
+  mindar-image="imageTargetSrc: targets/targets.mind; maxTrack: 1; autoStart: false; uiScanning: no; uiLoading: no; filterMinCF: 0.0001; filterBeta: 1"
+  renderer="colorManagement: true; antialias: true; maxCanvasWidth: 1280; maxCanvasHeight: 1280"
+  cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .tap; far: 100000"
+  vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
+  <a-assets timeout="15000">
+    <video id="v0" src="videos/01-lithium.mp4" preload="auto" muted playsinline webkit-playsinline loop crossorigin="anonymous"></video>
+    <video id="v1" src="videos/02-fashion.mp4" preload="auto" muted playsinline webkit-playsinline loop crossorigin="anonymous"></video>
+    <video id="v2" src="videos/03-kakao.mp4" preload="auto" muted playsinline webkit-playsinline loop crossorigin="anonymous"></video>
+  </a-assets>
+  <a-camera position="0 0 0" look-controls="enabled: false" wasd-controls="enabled: false"></a-camera>
+  <a-entity light="type: ambient; intensity: 0.75"></a-entity>
+  <a-entity light="type: directional; intensity: 0.9" position="0.5 1 1"></a-entity>
+
+  <!-- Die Anker selbst bleiben leer. Der Inhalt folgt ihnen (siehe ar.js) und bleibt stehen, wenn das Plakat kurz verloren geht. -->
+  <a-entity id="anchor0" mindar-image-target="targetIndex: 0"></a-entity>
+  <a-entity id="anchor1" mindar-image-target="targetIndex: 1"></a-entity>
+  <a-entity id="anchor2" mindar-image-target="targetIndex: 2"></a-entity>
+</a-scene>
+
+<script>
+// ---------- Einstellungen ----------
+// So lange (ms) bleibt alles sichtbar und das Video läuft weiter, wenn das Plakat aus dem Bild ist.
+const GRACE_MS = 6000;
+
+// Ruhe der Darstellung
+// calm: wie stark kleines Zittern nachgezogen wird (kleiner = ruhiger, z. B. 0.02)
+// fast: wie schnell der Inhalt bei grossen Bewegungen nachkommt (grösser = schneller, max. 1)
+// gyro: Bewegungssensor nutzen, damit der Inhalt im Raum stehen bleibt
+const TRACKING = { calm: 0.03, fast: 0.5, gyro: true };
+
+// Ablauf nach dem Erkennen eines Plakats (ms)
+const TIMING = {
+  model: 300,       // 3D-Objekt wächst aus dem Plakat
+  explode: 1100,    // 3D-Objekt öffnet sich
+  modelRest: 3000,  // 3D-Objekt fliegt in die Ecke
+  video: 3300,      // Video hebt sich aus dem Plakat
+  hint: 5600,       // Tipp "Tippe auf ..." erscheint (nur beim ersten Plakat)
+};
+
+// Positionen in Plakat-Einheiten: 1 = Plakatbreite, Plakat reicht von x -0.5 bis 0.5 und y -0.707 bis 0.707.
+// x, y, z (z = Abstand nach vorne), Drehung um y-Achse in Grad, Breite, Höhe, Zeitpunkt des Erscheinens (ms)
+const LAYOUT = [
+  { card: 'header', x: 0,     y: 0.86,  z: 0.06, rot: 0,   w: 0.9,  h: 0.18,   delay: 700 },
+  { card: 'fakt1',  x: -0.93, y: 0.40,  z: 0.12, rot: 20,  w: 0.75, h: 0.4125, delay: 1100 },
+  { card: 'fakt2',  x: -0.93, y: -0.20, z: 0.12, rot: 20,  w: 0.75, h: 0.4125, delay: 1400 },
+  { card: 'fakt3',  x: 0.93,  y: 0.40,  z: 0.12, rot: -20, w: 0.75, h: 0.4125, delay: 1700 },
+  { card: 'fakt4',  x: 0.93,  y: -0.20, z: 0.12, rot: -20, w: 0.75, h: 0.4125, delay: 2000 },
+  { card: 'frage',  x: 0,     y: -0.86, z: 0.06, rot: 0,   w: 0.9,  h: 0.18,   delay: 4300 },
+];
+// Wo das 3D-Objekt nach seinem Auftritt weiterschwebt (rechts unten neben dem Plakat)
+const MODEL_REST = { x: 0.84, y: -0.74, z: 0.15, scale: 0.55 };
+
+// Inhalte pro Station. model: akku | shirt | kakao, particles: salz | fasern | bohnen
+// chroma: Farbe, die im Video durchsichtig wird (z. B. '#00ff00' bei Greenscreen-Videos), sonst null
+const STATIONS = [
+  { nr: '01', title: 'Lithium', video: 'v0', poster: 'plakate/web/plakat-01.jpg',
+    model: 'akku', particles: 'salz', chroma: null,
+    question: 'Was steckt in deinem Handy?',
+    facts: [
+      { big: 'über 40 %', text: 'der Lithiumvorkommen der Welt liegen im Salar de Atacama in Chile.', src: 'UMass Amherst',
+        more: 'Der Lithiumverbrauch hat sich von 2021 bis 2024 verdoppelt.', moreSrc: 'IEA, via Skillings' },
+      { big: "2'000 l", text: 'Sole pro Sekunde pumpen die Minen dort aus dem Wüstenboden.', src: 'Danwatch',
+        more: 'Im Salar wird mehr Wasser verbraucht, als wieder nachfliesst.', moreSrc: 'UMass Amherst' },
+      { big: 'bis 95 %', text: 'des Wassers lassen sie verdunsten, um das Lithium zu gewinnen.', src: 'Danwatch',
+        more: 'In Toconao wird das Wasser knapp. Auch die Flamingos werden weniger.', moreSrc: 'Grist; NRDC' },
+      { big: 'über 70 %', text: 'des Kobalts für Akkus kommt aus der DR Kongo, auch aus Kinderarbeit.', src: 'US-Kongress; Theirworld',
+        more: 'Laut Cobalt Institute ist der Anteil der Kleinminen 2024 auf unter 2 % gesunken.', moreSrc: 'Cobalt Institute' },
+    ],
+    quiz: { q: 'Wie viel Sole pumpen die Minen im Salar pro Jahr ab?', a: ['63 Mio. Liter', "über 63 Mrd. Liter", '630 Liter'], right: 1,
+      info: 'Über 63 Milliarden Liter, mitten in der Wüste.' } },
+
+  { nr: '02', title: 'Fast Fashion', video: 'v1', poster: 'plakate/web/plakat-02.jpg',
+    model: 'shirt', particles: 'fasern', chroma: null,
+    question: 'Wer hat deine Kleider gemacht?',
+    facts: [
+      { big: "2'700 l", text: 'Wasser braucht ein Baumwoll-T-Shirt. So viel trinkst du in drei Jahren.', src: 'Łukasiewicz Institut',
+        more: "Für ein Kilo Baumwolle braucht es rund 20'000 Liter Wasser.", moreSrc: 'Łukasiewicz Institut' },
+      { big: "8'000 l", text: 'Wasser braucht eine einzige Jeans.', src: 'Łukasiewicz Institut',
+        more: 'Das sind etwa 50 volle Badewannen.', moreSrc: 'eigene Rechnung, 160 l pro Wanne' },
+      { big: "1'134", text: 'Menschen starben 2013 beim Einsturz der Textilfabrik Rana Plaza.', src: 'Fashion Revolution; ILO',
+        more: "Am 24. April 2013 in Bangladesch. Rund 2'500 Menschen wurden verletzt.", moreSrc: 'ILO' },
+      { big: '93 %', text: 'der untersuchten Marken zahlen keinen existenzsichernden Lohn.', src: 'Fashion Checker',
+        more: 'Existenzsichernd heisst: genug für Essen, Miete, Schule und Arzt.', moreSrc: '' },
+    ],
+    quiz: { q: 'Wie viel der Exporte von Bangladesch ist Kleidung?', a: ['12 %', '45 %', '82 %'], right: 2,
+      info: '82 %. Kleidung ist das wichtigste Exportgut des Landes.' } },
+
+  { nr: '03', title: 'Kakao & Kaffee', video: 'v2', poster: 'plakate/web/plakat-03.jpg',
+    model: 'kakao', particles: 'bohnen', chroma: null,
+    question: 'Was ist dir deine Schokolade wert?',
+    facts: [
+      { big: 'über 60 %', text: "des Kakaos weltweit kommt aus Côte d'Ivoire und Ghana.", src: "Tony's Chocolonely",
+        more: 'Die Schokoladenindustrie macht über 130 Milliarden Dollar Umsatz.', moreSrc: 'Pulitzer Center' },
+      { big: '6 %', text: 'vom Preis einer Milchschokolade bekommen die Kakaobauern.', src: 'Walk Free',
+        more: 'Die Hersteller bekommen 33 %, also mehr als fünfmal so viel.', moreSrc: 'Walk Free' },
+      { big: '1,56 Mio.', text: "Kinder arbeiten im Kakaoanbau in Ghana und Côte d'Ivoire.", src: 'Pulitzer Center',
+        more: 'Die Zahl stammt von der Schweizer Plattform für nachhaltigen Kakao.', moreSrc: 'Pulitzer Center' },
+      { big: '7 bis 15 %', text: 'vom Preis einer Tasse Kaffee gehen an die Bauern.', src: 'University of Melbourne',
+        more: 'Der grösste Teil bleibt bei Handel, Rösterei und Café.', moreSrc: 'University of Melbourne' },
+    ],
+    quiz: { q: 'Wie viel verdienen viele Kakaobauern pro Tag?', a: ['unter 1 Dollar', 'etwa 10 Dollar', 'etwa 30 Dollar'], right: 0,
+      info: 'Unter 1 Dollar, während die Industrie Milliarden umsetzt.' } },
+];
+</script>
+<script src="ar.js"></script>
+</body>
+</html>
