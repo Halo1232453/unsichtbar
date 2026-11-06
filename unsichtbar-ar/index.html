@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="style.css">
 <script src="lib/aframe-v1.5.0.min.js"></script>
 <script src="lib/mindar-image-aframe-1.2.5.prod.js"></script>
+<script src="lib/qrcode.min.js"></script>
 </head>
 <body class="ar">
 
@@ -25,6 +26,11 @@
     <button id="startBtn">Kamera starten</button>
     <p class="small">Die Kamera wird nur hier im Browser verwendet, nichts wird gespeichert.<br>
       <a href="vorschau.html">Ohne Kamera ansehen</a> · <a href="quellen.html">Quellen</a> · <a href="index.html?demo">Effekte testen</a></p>
+    <!-- QR-Code zum Öffnen auf dem Handy (nur am Computer sichtbar) -->
+    <div id="phoneQr">
+      <div id="phoneQrCode"></div>
+      <p>Am Computer? Scanne den Code mit dem Handy, um die Seite dort zu öffnen.</p>
+    </div>
   </div>
 </section>
 
@@ -164,6 +170,10 @@ const STATIONS = [
     quiz: { q: 'Wie viel verdienen viele Kakaobauern pro Tag?', a: ['unter 1 Dollar', 'etwa 10 Dollar', 'etwa 30 Dollar'], right: 0,
       info: 'Unter 1 Dollar, während die Industrie Milliarden umsetzt.' } },
 ];
+
+// QR-Code auf der Startseite zeigt auf diese Seite (ohne ?demo)
+new QRCode(document.getElementById('phoneQrCode'), { text: new URL('index.html', location.href).href,
+  width: 400, height: 400, colorDark: '#141414', colorLight: '#f6f4ef', correctLevel: QRCode.CorrectLevel.M });
 </script>
 <script src="ar.js"></script>
 </body>
