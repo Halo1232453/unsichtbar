@@ -79,7 +79,7 @@ AFRAME.registerComponent('follow-anchor', {
     this.el.object3D.matrixAutoUpdate = false;
     this.snap = true;
   },
-  tick() {
+  tick(t, dt) {
     if (!this.active) return;
     const a = this.data.anchor.object3D;
     const obj = this.el.object3D;
@@ -101,7 +101,9 @@ AFRAME.registerComponent('follow-anchor', {
         // Wie weit liegt die Erkennung daneben? (in Plakatbreiten bzw. Bogenmass)
         const dist = this.p.distanceTo(this.tp) / Math.max(this.s.x, 1e-6);
         const move = clamp01(Math.max(dist / 0.15, this.q.angleTo(this.tq) / 0.25));
-        const k = lerp(TRACKING.calm, TRACKING.fast, move * move);
+        // Werte gelten für 60 Bilder/s, bei weniger Bildern wird pro Bild entsprechend mehr nachgezogen
+        const k60 = lerp(TRACKING.calm, TRACKING.fast, move * move);
+        const k = 1 - Math.pow(1 - k60, Math.min(dt || 16.7, 100) / 16.7);
         this.p.lerp(this.tp, k); this.q.slerp(this.tq, k); this.s.lerp(this.ts, k);
       }
       obj.visible = true;
@@ -153,20 +155,26 @@ function countUp(str, k) {
   });
 }
 
+// Neu zeichnen kostet auf dem Handy viel. Deshalb in Stufen rechnen und nur zeichnen, wenn sich etwas ändert.
+const step = (v, n = 20) => Math.round(clamp01(v) * n) / n;
 function drawFront(c, f, s) {
+  const num = countUp(f.big, step(s.n, 30)), line = step(s.line), text = step(s.text / 1.2) * 1.2, hnt = step(s.hint);
+  const sig = [num, line, text, hnt].join('|');
+  if (c.sig === sig) return;
+  c.sig = sig;
   const { ctx, w } = c;
   paperFrame(c);
   ctx.fillStyle = COL.ink; ctx.font = `500 104px ${FONT}`;
-  ctx.fillText(countUp(f.big, s.n), 44, 158);
-  ctx.fillStyle = COL.acc; ctx.fillRect(44, 186, 120 * clamp01(s.line), 6);
+  ctx.fillText(num, 44, 158);
+  ctx.fillStyle = COL.acc; ctx.fillRect(44, 186, 120 * line, 6);
   ctx.fillStyle = COL.ink; ctx.font = `400 34px ${FONT}`;
   wrapText(ctx, f.text, 712).forEach((l, i) => {
-    ctx.globalAlpha = clamp01(s.text * 1.6 - i * 0.5);
+    ctx.globalAlpha = clamp01(text * 1.6 - i * 0.5);
     ctx.fillText(l, 44, 258 + i * 46);
   });
   ctx.globalAlpha = 1; ctx.fillStyle = COL.grey; ctx.font = `400 22px ${FONT}`;
   ctx.fillText('Quelle: ' + f.src, 44, 404);
-  ctx.globalAlpha = clamp01(s.hint); ctx.textAlign = 'right';
+  ctx.globalAlpha = hnt; ctx.textAlign = 'right';
   ctx.fillText('antippen ↻', w - 40, 404);
   ctx.globalAlpha = 1;
   c.tex.needsUpdate = true;
@@ -426,9 +434,12 @@ function modelShirt() {
   });
   const label = canvasTex(512, 192);
   const drawLabel = k => {
+    const sig = countUp("2'700 l", step(k, 30));
+    if (label.sig === sig) return;
+    label.sig = sig;
     paperFrame(label);
     label.ctx.textAlign = 'center';
-    label.ctx.fillStyle = COL.ink; label.ctx.font = `600 84px ${FONT}`; label.ctx.fillText(countUp("2'700 l", k), 256, 104);
+    label.ctx.fillStyle = COL.ink; label.ctx.font = `600 84px ${FONT}`; label.ctx.fillText(sig, 256, 104);
     label.ctx.fillStyle = COL.grey; label.ctx.font = `400 32px ${FONT}`; label.ctx.fillText('Wasser für 1 T-Shirt', 256, 160);
     label.tex.needsUpdate = true;
   };
@@ -556,7 +567,16 @@ function buildStation(st, i) {
 
   // Video
   const vEl = document.getElementById(st.video);
-  const vTex = new T.VideoTexture(vEl);
+  // Nur dann ein neues Bild hochladen, wenn das Video wirklich ein neues hat (25/30 statt 60 Mal pro Sekunde)
+  let vTex;
+  if (vEl.requestVideoFrameCallback) {
+    vTex = new T.Texture(vEl);
+    vTex.minFilter = T.LinearFilter; vTex.generateMipmaps = false;
+    const onFrame = () => { vTex.needsUpdate = true; vEl.requestVideoFrameCallback(onFrame); };
+    vEl.requestVideoFrameCallback(onFrame);
+  } else {
+    vTex = new T.VideoTexture(vEl);
+  }
   vTex.colorSpace = T.SRGBColorSpace;
   const vMat = fadeMat(vTex);
   if (st.chroma) {   // Greenscreen: diese Farbe wird durchsichtig
@@ -833,7 +853,25 @@ function wire() {
     });
   });
 }
-if (scene.hasLoaded) wire(); else scene.addEventListener('loaded', wire);
+// Shader und Bilder einmal vorbereiten, damit beim ersten Erkennen nichts kurz einfriert
+function warmup() {
+  const r = scene.renderer, cam = scene.camera;
+  if (!r || !cam) return;
+  const hidden = [];
+  scene.object3D.traverse(o => { if (!o.visible) { hidden.push(o); o.visible = true; } });
+  try {
+    r.compile(scene.object3D, cam);
+    if (r.initTexture) scene.object3D.traverse(o => {
+      [].concat(o.material || []).forEach(mat => {
+        const texs = Object.values(mat).concat(Object.values(mat.uniforms || {}).map(u => u.value));
+        texs.forEach(v => { if (v && v.isTexture && !v.isVideoTexture && !(v.image instanceof HTMLVideoElement)) r.initTexture(v); });
+      });
+    });
+  } finally {
+    hidden.forEach(o => { o.visible = false; });
+  }
+}
+if (scene.hasLoaded) { wire(); warmup(); } else scene.addEventListener('loaded', () => { wire(); warmup(); });
 
 // ---------- Testmodus ohne Kamera: index.html?demo ----------
 let demoIdx = -1, yaw = 0, pitch = 0, tYaw = 0, tPitch = 0;
@@ -882,20 +920,13 @@ function unlockVideos() {
   ])));
 }
 
-// Nur beim Testen über den Tunnel: Zustand an den Test-Server melden
-const dbg = location.hostname.endsWith('trycloudflare.com')
-  ? msg => { fetch('log?' + encodeURIComponent(msg)).catch(() => {}); }
-  : () => {};
-window.addEventListener('error', e => dbg('JS-Fehler: ' + e.message));
-window.addEventListener('unhandledrejection', e => dbg('Promise-Fehler: ' + (e.reason && (e.reason.message || e.reason))));
-
 document.getElementById('startBtn').addEventListener('click', async () => {
   const unlocking = unlockVideos();   // muss direkt im Tipp starten
   // Bewegungssensor: das iPhone fragt danach, auch das muss direkt im Tipp passieren
   const DOE = window.DeviceOrientationEvent;
   const motion = !TRACKING.gyro || !DOE ? Promise.resolve('aus')
     : DOE.requestPermission ? DOE.requestPermission().catch(() => 'denied') : Promise.resolve('granted');
-  motion.then(r => { dbg('Bewegungssensor: ' + r); if (r === 'granted') gyro.listen(); });
+  motion.then(r => { if (r === 'granted') gyro.listen(); });
   if (DEMO) {
     await unlocking;
     document.getElementById('start').classList.add('hidden');
@@ -911,9 +942,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
   let stream;
   try {
     stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'environment' } });
-    dbg('Kamera ok');
   } catch (e) {
-    dbg('Kamera-Fehler ' + e.name);
     showError('Fehler: ' + e.name + (e.message ? ' (' + e.message + ')' : ''));
     return;
   }
@@ -923,23 +952,16 @@ document.getElementById('startBtn').addEventListener('click', async () => {
   document.getElementById('start').classList.add('hidden');
   scanning.classList.remove('hidden');
   status.textContent = 'Bilderkennung wird geladen …';
-  scene.addEventListener('arReady', () => { status.textContent = 'Halte die Kamera auf ein Plakat'; dbg('arReady'); }, { once: true });
+  scene.addEventListener('arReady', () => { status.textContent = 'Halte die Kamera auf ein Plakat'; }, { once: true });
   const sys = scene.systems['mindar-image-system'];
   sys.start();
-  dbg('MindAR gestartet');
   // iPhone: das Kamerabild ausdrücklich stumm schalten und abspielen
   setTimeout(() => {
     const v = sys.video;
     if (!v) return;
     v.muted = true;
-    v.play().catch(e => dbg('play-Fehler ' + e.name));
+    v.play().catch(() => {});
   }, 50);
-  let n = 0;
-  const watch = setInterval(() => {
-    const v = sys.video, tr = stream.getVideoTracks()[0];
-    dbg(`Stand ${++n}: video readyState=${v && v.readyState} ${v && v.videoWidth}x${v && v.videoHeight} paused=${v && v.paused} track=${tr && tr.readyState} controller=${!!sys.controller}`);
-    if (n >= 8 || status.textContent.startsWith('Halte')) clearInterval(watch);
-  }, 2000);
 });
 
 scene.addEventListener('arError', e => {
