@@ -127,7 +127,8 @@ Wofür die Seite bekannt sein soll. /li-plan und /li-woche rotieren darüber.
 
 ## Marke (für Karussells)
 
-- **Farben:** **[bitte ergänzen, z.B. Hex-Werte aus dem Logo]**
+- **Logo:** `assets/logo-digitalonly.png` (Original aus dem digitalONLY-Design, schwarz, transparenter Hintergrund). Auf jedem Bild und jeder Karussell-Folie verwenden, nie nachsetzen.
+- **Farben:** Schwarz #111 auf Hellgrau #f2f1ed / Weiss, Akzent nur Schwarz (wie die Anleitung). **[bitte prüfen]**
 - **Schrift:** **[bitte ergänzen]**
 - **Website:** **[bitte ergänzen]**
 
