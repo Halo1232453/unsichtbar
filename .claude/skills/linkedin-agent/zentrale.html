@@ -1,0 +1,560 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>LinkedIn-Agent digitalONLY</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: Redaktionspult. Eine Spalte, oben die Wochenleiste, darunter die Beiträge
+   in Tagesreihenfolge, jeder mit der Linie, an der der Handy-Feed abschneidet. */
+:root {
+  --bg: #eef2f0;
+  --surface: #ffffff;
+  --sunk: #f6f8f7;
+  --ink: #15201c;
+  --muted: #5a6964;
+  --line: #d4ddd9;
+  --accent: #0d5f6e;
+  --accent-soft: #dcecef;
+  --on-accent: #ffffff;
+  --pass: #2c7a3f;
+  --pass-soft: #e1f1e4;
+  --review: #9a5b00;
+  --review-soft: #fbefd9;
+  --flag: #b42318;
+  --flag-soft: #fbe3e0;
+  --mark: #ffe7a3;
+  --mark-ink: #4a3500;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --feed: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1513; --surface: #16201d; --sunk: #111a17; --ink: #e4ebe8; --muted: #98a7a2;
+    --line: #2a3632; --accent: #5ec3d2; --accent-soft: #173a40; --on-accent: #06262c;
+    --pass: #6fcf87; --pass-soft: #163522; --review: #f0b65a; --review-soft: #3b2a10;
+    --flag: #f2877c; --flag-soft: #3f1c18; --mark: #5a4710; --mark-ink: #ffe9a8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1513; --surface: #16201d; --sunk: #111a17; --ink: #e4ebe8; --muted: #98a7a2;
+  --line: #2a3632; --accent: #5ec3d2; --accent-soft: #173a40; --on-accent: #06262c;
+  --pass: #6fcf87; --pass-soft: #163522; --review: #f0b65a; --review-soft: #3b2a10;
+  --flag: #f2877c; --flag-soft: #3f1c18; --mark: #5a4710; --mark-ink: #ffe9a8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font: 16px/1.5 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 20px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, textarea:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+header.top { display: grid; gap: 6px; }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-size: clamp(30px, 7vw, 44px); font-weight: 800; letter-spacing: -.02em; line-height: 1.02; }
+.autopilot { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 14px; }
+.autopilot b { color: var(--ink); font-weight: 700; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--pass); margin-right: 6px; vertical-align: 1px; }
+
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; position: sticky; top: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 5; }
+nav.tabs a { padding: 10px 12px; text-decoration: none; color: var(--muted); font-weight: 700; border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+nav.tabs .count { font: 600 11px var(--mono); background: var(--accent-soft); color: var(--accent); border-radius: 99px; padding: 1px 7px; margin-left: 4px; }
+
+.notice { background: var(--sunk); border: 1px dashed var(--line); border-radius: var(--radius); padding: 14px 16px; color: var(--muted); }
+.notice b { color: var(--ink); }
+
+section.week { display: grid; gap: 14px; }
+.week-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
+.week-head h2 { font-size: 22px; font-weight: 800; }
+.week-head .range { color: var(--muted); font-size: 14px; }
+.strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.strip div { text-align: center; padding: 6px 0 8px; border-radius: 8px; font: 600 12px var(--mono); color: var(--muted); background: var(--sunk); }
+.strip div i { display: block; height: 6px; width: 6px; margin: 5px auto 0; border-radius: 50%; background: transparent; }
+.strip div.has { color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.strip div.has i { background: var(--accent); }
+.strip div.st-geplant i { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.strip div.st-gepostet i { background: var(--pass); }
+.strip div.today { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+article.post { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 12px; min-width: 0; }
+article.post.st-gepostet { border-color: color-mix(in srgb, var(--pass) 45%, var(--line)); }
+.post-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.when { font: 600 14px var(--mono); }
+.chip { font: 700 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; background: var(--sunk); color: var(--muted); border: 1px solid var(--line); }
+.chip.st-entwurf { color: var(--ink); }
+.chip.st-geplant { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.chip.st-gepostet { background: var(--pass-soft); color: var(--pass); border-color: transparent; }
+.chip.st-verworfen { text-decoration: line-through; }
+.post-top .status { margin-left: auto; }
+.hook { color: var(--muted); font-size: 14px; }
+.post h3 { font-size: 19px; font-weight: 600; line-height: 1.25; }
+
+.feed { background: var(--sunk); border: 1px solid var(--line); border-radius: 8px; padding: 14px; font: 15px/1.45 var(--feed); white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; }
+.feed .cut { display: flex; align-items: center; gap: 8px; margin: 8px 0; font: 600 11px var(--mono); letter-spacing: .04em; color: var(--accent); white-space: normal; }
+.feed .cut::before, .feed .cut::after { content: ""; flex: 1; border-top: 1px dashed var(--accent); }
+.feed .rest.clamped { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+.feed mark { background: var(--mark); color: var(--mark-ink); border-radius: 3px; padding: 0 2px; }
+.more { background: none; border: 0; padding: 0; color: var(--accent); font-weight: 700; font-size: 14px; justify-self: start; }
+
+.meta { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 13px; color: var(--muted); }
+.pill { font: 600 12px var(--mono); padding: 3px 8px; border-radius: 99px; }
+.pill.PASS { background: var(--pass-soft); color: var(--pass); }
+.pill.REVIEW { background: var(--review-soft); color: var(--review); }
+.pill.FLAGGED { background: var(--flag-soft); color: var(--flag); }
+.pill.warn { background: var(--mark); color: var(--mark-ink); }
+
+.sub { border-left: 3px solid var(--line); padding: 2px 0 2px 12px; display: grid; gap: 4px; font-size: 14px; min-width: 0; }
+.sub .label { font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.sub p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sub button { justify-self: start; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; font-weight: 700; font-size: 14px; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn.small { padding: 5px 9px; font-size: 13px; }
+.btn.ghost { border-color: transparent; background: none; color: var(--muted); }
+.btn.danger { color: var(--flag); border-color: var(--flag); background: var(--flag-soft); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: var(--surface); padding: 7px 10px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+.actions .spacer { flex: 1; }
+
+textarea { width: 100%; min-height: 220px; resize: vertical; font: 15px/1.45 var(--feed); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+textarea.short { min-height: 110px; font-family: var(--body); }
+textarea.tall { min-height: 60vh; font: 14px/1.5 var(--mono); }
+.feed.voice { font: 14px/1.55 var(--body); }
+
+.ideas form { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+.ideas label { font-weight: 700; }
+.ideas .hint { font-size: 13px; color: var(--muted); margin: 0; }
+.idea-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.idea { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.idea p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; grid-column: 1 / -1; }
+.idea .when { font-size: 12px; color: var(--muted); font-weight: 400; }
+
+.archive .row { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.archive .row .t { min-width: 0; overflow-wrap: anywhere; }
+.archive .row .feed { grid-column: 1 / -1; }
+
+.guide { display: grid; gap: 18px; }
+.guide ol { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+.guide li::marker { font: 600 14px var(--mono); color: var(--accent); }
+.guide p { margin: 0; max-width: 65ch; }
+.cmds { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.cmds table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.cmds td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmds tr:last-child td { border-bottom: 0; }
+.cmds td:first-child { font: 600 13px var(--mono); color: var(--accent); white-space: nowrap; }
+.guide h2 { font-size: 22px; font-weight: 800; }
+
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 14px; border-radius: 8px; font-weight: 700; font-size: 14px; z-index: 20; }
+@media (prefers-reduced-motion: no-preference) {
+  .toast { animation: rise .18s ease-out; }
+  @keyframes rise { from { transform: translate(-50%, 8px); opacity: 0; } }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">digitalONLY AG · Unternehmensseite</span>
+    <h1>LinkedIn-Agent</h1>
+    <div class="autopilot" id="autopilot"><span><span class="dot"></span>Autopilot: jeden <b>Freitagnachmittag</b> drei Entwürfe für die nächste Woche</span></div>
+  </header>
+
+  <nav class="tabs" aria-label="Bereiche">
+    <a href="#woche" data-tab="woche">Woche<span class="count" id="c-woche" hidden></span></a>
+    <a href="#ideen" data-tab="ideen">Ideen<span class="count" id="c-ideen" hidden></span></a>
+    <a href="#stimme" data-tab="stimme">Stimme<span class="count" id="c-stimme" hidden></span></a>
+    <a href="#archiv" data-tab="archiv">Archiv</a>
+    <a href="#anleitung" data-tab="anleitung">So geht's</a>
+  </nav>
+
+  <main id="app">
+    <div class="notice">Entwürfe werden geladen ...</div>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var DAYS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+  var MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+  var STATUS = [["entwurf", "Entwurf"], ["geplant", "Geplant"], ["gepostet", "Gepostet"]];
+  var PH = /\{[^{}\n]{1,40}\}/g;
+
+  var db = null, user = null, canWrite = true, dbState = "loading";
+  var S = { posts: [], ideen: [], meta: null, stimme: null, stimmeDraft: null, tab: "woche", open: {}, editing: null, confirm: null, ideaDraft: "" };
+  var TODO = /\[bitte [^\]\n]{0,80}\]/g;
+  var pendingRender = false;
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function marked(s) { return esc(s).replace(/\{[^{}\n]{1,40}\}/g, function (m) { return "<mark>" + m + "</mark>"; }); }
+  function parseDate(iso) { var p = String(iso || "").split("-"); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; }
+  function mondayOf(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); var wd = (x.getDay() + 6) % 7; x.setDate(x.getDate() - wd); return x; }
+  function isoWeek(d) { var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); var n = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - n); var y = new Date(Date.UTC(t.getUTCFullYear(), 0, 1)); return Math.ceil(((t - y) / 86400000 + 1) / 7); }
+  function key(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function fmtShort(d) { return d.getDate() + "." + (d.getMonth() + 1) + "."; }
+  function chf(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "'"); }
+  function fmtStamp(iso) { var d = new Date(iso); if (isNaN(d)) return ""; return DAYS[d.getDay()] + " " + fmtShort(d) + " " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); }
+  function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function placeholders(t) { return (String(t || "").match(PH) || []); }
+  function sortPosts(a, b) { return (a.datum + (a.zeit || "")).localeCompare(b.datum + (b.zeit || "")); }
+
+  function toast(msg) {
+    var old = document.querySelector(".toast"); if (old) old.remove();
+    var el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
+    document.body.appendChild(el); setTimeout(function () { el.remove(); }, 2200);
+  }
+
+  function copy(text) {
+    var done = function () { toast("Kopiert. In LinkedIn einfügen."); };
+    var fallback = function () {
+      var ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      ta.remove(); toast(ok ? "Kopiert. In LinkedIn einfügen." : "Kopieren blockiert. Text markieren und kopieren.");
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  }
+
+  function scheduleRender() {
+    var a = document.activeElement;
+    if (a && (a.tagName === "TEXTAREA" || a.tagName === "INPUT")) { pendingRender = true; return; }
+    render();
+  }
+  document.addEventListener("focusout", function () {
+    setTimeout(function () {
+      var a = document.activeElement;
+      if (pendingRender && !(a && (a.tagName === "TEXTAREA" || a.tagName === "INPUT"))) { pendingRender = false; render(); }
+    }, 250);
+  });
+
+  /* ---------- views ---------- */
+
+  function postCard(p, compact) {
+    var text = String(p.text || "");
+    var ph = placeholders(text);
+    var cutAt = 140;
+    if (text.length > 140) { var sp = Math.max(text.lastIndexOf(" ", 140), text.lastIndexOf("\n", 140)); if (sp > 100) cutAt = sp + 1; }
+    var head = text.slice(0, cutAt), rest = text.slice(cutAt);
+    var isOpen = !!S.open[p.id];
+    var d = parseDate(p.datum);
+    var st = p.status || "entwurf";
+    var editing = S.editing && S.editing.id === p.id;
+    var h = '<article class="post st-' + esc(st) + '" id="p-' + esc(p.id) + '">';
+    h += '<div class="post-top"><span class="when">' + esc(d ? DAYS[d.getDay()].toUpperCase() + " " + fmtShort(d) : p.datum) + (p.zeit ? " · " + esc(p.zeit) : "") + '</span>';
+    if (p.typ) h += '<span class="chip">' + esc(p.typ) + '</span>';
+    h += '<span class="chip status st-' + esc(st) + '">' + esc(st) + '</span></div>';
+    if (p.hook) h += '<div class="hook">Hook ' + esc(p.hook) + (p.bearbeitet ? " · von Hand bearbeitet" : "") + '</div>';
+    if (p.titel) h += '<h3>' + esc(p.titel) + '</h3>';
+    if (editing) {
+      h += '<label class="hook" for="edit-' + esc(p.id) + '">Text bearbeiten. Platzhalter in {geschweiften Klammern} ersetzen.</label>';
+      h += '<textarea id="edit-' + esc(p.id) + '" data-edit="' + esc(p.id) + '">' + esc(S.editing.draft) + '</textarea>';
+      h += '<div class="actions"><button class="btn primary" data-act="save" data-id="' + esc(p.id) + '">Speichern</button><button class="btn" data-act="cancel-edit">Abbrechen</button></div>';
+    } else {
+      h += '<div class="feed">' + marked(head);
+      if (rest) {
+        h += '<span class="cut">Handy schneidet hier ab · … mehr anzeigen</span>';
+        h += '<div class="rest' + (isOpen ? "" : " clamped") + '">' + marked(rest) + '</div>';
+      }
+      h += '</div>';
+      if (rest) h += '<button class="more" data-act="toggle" data-id="' + esc(p.id) + '">' + (isOpen ? "Weniger zeigen" : "Ganzen Beitrag zeigen") + '</button>';
+    }
+    h += '<div class="meta"><span class="mono">' + chf(text.length) + ' Zeichen</span>';
+    if (p.urteil) h += '<span class="pill ' + esc(p.urteil) + '">Mensch-Score ' + esc(Math.round(+p.score || 0)) + ' ' + esc(p.urteil) + (p.bearbeitet ? " (vor Bearbeitung)" : "") + '</span>';
+    if (ph.length) h += '<span class="pill warn">' + ph.length + (ph.length === 1 ? " Platzhalter offen" : " Platzhalter offen") + '</span>';
+    h += '</div>';
+    if (p.erster_kommentar && !compact) {
+      h += '<div class="sub"><span class="label">Erster Kommentar, direkt nach dem Posten</span><p>' + marked(p.erster_kommentar) + '</p><button class="btn small" data-act="copy-c" data-id="' + esc(p.id) + '">Kommentar kopieren</button></div>';
+    }
+    if (p.notiz && !compact) h += '<div class="sub"><span class="label">Notiz vom Agenten</span><p>' + esc(p.notiz) + '</p></div>';
+    if (!editing) {
+      h += '<div class="actions"><button class="btn primary" data-act="copy" data-id="' + esc(p.id) + '">Text kopieren</button>';
+      if (canWrite && db) {
+        h += '<button class="btn" data-act="edit" data-id="' + esc(p.id) + '">Bearbeiten</button><span class="spacer"></span>';
+        h += '<div class="seg" role="group" aria-label="Status">';
+        STATUS.forEach(function (s) { h += '<button data-act="status" data-id="' + esc(p.id) + '" data-st="' + s[0] + '" aria-pressed="' + (st === s[0]) + '">' + s[1] + '</button>'; });
+        h += '</div>';
+        if (S.confirm === "drop:" + p.id) {
+          h += '<button class="btn small danger" data-act="drop-yes" data-id="' + esc(p.id) + '">Wirklich verwerfen</button><button class="btn small ghost" data-act="no">Nein</button>';
+        } else if (st !== "verworfen") {
+          h += '<button class="btn small ghost" data-act="drop" data-id="' + esc(p.id) + '">Verwerfen</button>';
+        } else {
+          h += '<button class="btn small ghost" data-act="status" data-id="' + esc(p.id) + '" data-st="entwurf">Wiederherstellen</button>';
+        }
+      }
+      h += '</div>';
+    }
+    return h + '</article>';
+  }
+
+  function weekView() {
+    var mon = mondayOf(today());
+    if (dbState === "loading") return '<div class="notice">Entwürfe werden geladen ...</div>';
+    var upcoming = S.posts.filter(function (p) { var d = parseDate(p.datum); return d && d >= mon && p.status !== "verworfen"; }).sort(sortPosts);
+    if (!upcoming.length) {
+      return '<div class="notice"><b>Noch keine Entwürfe für diese oder die nächsten Wochen.</b><br>Der Autopilot legt sie am Freitag hier ab. Sofort geht es im Chat mit <span class="mono">/li-woche</span>. Ideen für die Beiträge kannst du unter «Ideen» ablegen.</div>';
+    }
+    var groups = {};
+    upcoming.forEach(function (p) { var k = key(mondayOf(parseDate(p.datum))); (groups[k] = groups[k] || []).push(p); });
+    var t = today();
+    return Object.keys(groups).sort().map(function (k) {
+      var m = parseDate(k), sun = new Date(m); sun.setDate(m.getDate() + 6);
+      var list = groups[k];
+      var h = '<section class="week"><div class="week-head"><h2>KW ' + isoWeek(m) + (key(m) === key(mondayOf(t)) ? " · diese Woche" : "") + '</h2><span class="range">' + m.getDate() + "." + (m.getMonth() !== sun.getMonth() ? " " + MONTHS[m.getMonth()] : "") + "–" + sun.getDate() + ". " + MONTHS[sun.getMonth()] + '</span></div>';
+      h += '<div class="strip" aria-label="Wochentage">';
+      for (var i = 0; i < 7; i++) {
+        var d = new Date(m); d.setDate(m.getDate() + i);
+        var onDay = list.filter(function (p) { return p.datum === key(d); });
+        var cls = onDay.length ? "has st-" + (onDay[0].status || "entwurf") : "";
+        if (key(d) === key(t)) cls += " today";
+        h += '<div class="' + cls + '" title="' + esc(onDay.map(function (p) { return p.titel || ""; }).join(" · ")) + '">' + DAYS[d.getDay()] + '<i></i></div>';
+      }
+      h += '</div>' + list.map(function (p) { return postCard(p, false); }).join("") + '</section>';
+      return h;
+    }).join("");
+  }
+
+  function ideasView() {
+    var h = '<div class="ideas" style="display:grid;gap:16px">';
+    if (canWrite && db) {
+      h += '<form id="idea-form"><label for="idee-text">Was ist passiert?</label>';
+      h += '<p class="hint">Ein Kundengespräch, eine Zahl, ein Fehler, eine Frage, die immer wieder kommt. Der Autopilot nimmt neue Ideen am Freitag zuerst. Kundennamen nur mit Freigabe.</p>';
+      h += '<textarea class="short" id="idee-text" placeholder="z.B. Apotheke hatte am Feiertag falsche Öffnungszeiten auf Google, drei Kunden standen vor der Tür">' + esc(S.ideaDraft) + '</textarea>';
+      h += '<div class="actions"><button class="btn primary" type="submit">Idee ablegen</button></div></form>';
+    }
+    var ideas = S.ideen.slice().sort(function (a, b) { var sa = a.status === "neu" ? 0 : 1, sb = b.status === "neu" ? 0 : 1; return sa - sb || String(b.erstellt).localeCompare(String(a.erstellt)); });
+    if (!ideas.length) {
+      h += '<div class="notice">Noch keine Ideen abgelegt. Echte Erlebnisse machen die besten Beiträge. Ohne Ideen schreibt der Autopilot Wissens- und Meinungsbeiträge aus den Themen in voice.md.</div>';
+    } else {
+      h += '<div class="idea-list">' + ideas.map(function (i) {
+        var used = i.status === "verwendet";
+        var r = '<div class="idea"><span class="when mono">' + esc(fmtStamp(i.erstellt)) + '</span><span class="chip' + (used ? " st-gepostet" : "") + '">' + (used ? "verwendet" + (i.verwendet_in ? " · " + esc(i.verwendet_in) : "") : "neu") + '</span><p>' + esc(i.text) + '</p>';
+        if (canWrite && db) {
+          r += S.confirm === "idea:" + i.id
+            ? '<div class="actions"><button class="btn small danger" data-act="idea-del-yes" data-id="' + esc(i.id) + '">Wirklich entfernen</button><button class="btn small ghost" data-act="no">Nein</button></div>'
+            : '<div class="actions"><button class="btn small ghost" data-act="idea-del" data-id="' + esc(i.id) + '">Entfernen</button></div>';
+        }
+        return r + '</div>';
+      }).join("") + '</div>';
+    }
+    return h + '</div>';
+  }
+
+  function stimmeView() {
+    var h = '<div class="guide">';
+    h += '<p>So klingt digitalONLY auf LinkedIn. Der Autopilot und alle Befehle lesen diesen Text, bevor sie schreiben: wer spricht, für wen, welche Wörter nie, welche Zahlen und Kunden genannt werden dürfen. Gelb markiert ist, was noch geprüft werden muss.</p>';
+    if (S.stimmeDraft !== null) {
+      h += '<label class="hook" for="stimme-text">Stimme bearbeiten. Einfacher Text, Überschriften mit #.</label>';
+      h += '<textarea class="tall" id="stimme-text">' + esc(S.stimmeDraft) + '</textarea>';
+      h += '<div class="actions"><button class="btn primary" data-act="stimme-save">Speichern</button><button class="btn" data-act="stimme-cancel">Abbrechen</button></div>';
+    } else if (!S.stimme || !S.stimme.text) {
+      h += '<div class="notice">' + (dbState === "loading" ? "Wird geladen ..." : "Noch keine Stimme hinterlegt. Bis dahin nutzt der Agent die Vorlage aus dem Skill.") + '</div>';
+      if (canWrite && db && dbState === "ok") h += '<div class="actions"><button class="btn primary" data-act="stimme-edit">Stimme schreiben</button></div>';
+    } else {
+      var todo = (S.stimme.text.match(TODO) || []).length;
+      h += '<div class="meta">' + (todo ? '<span class="pill warn">' + todo + ' Stellen zu prüfen</span>' : '<span class="pill PASS">Alles geprüft</span>') + (S.stimme.aktualisiert ? '<span>Zuletzt geändert ' + esc(fmtStamp(S.stimme.aktualisiert)) + '</span>' : '') + '</div>';
+      if (canWrite && db) h += '<div class="actions"><button class="btn primary" data-act="stimme-edit">Bearbeiten</button></div>';
+      h += '<div class="feed voice">' + esc(S.stimme.text).replace(TODO, function (m) { return "<mark>" + m + "</mark>"; }) + '</div>';
+    }
+    return h + '</div>';
+  }
+
+  function archiveView() {
+    var mon = mondayOf(today());
+    var past = S.posts.filter(function (p) { var d = parseDate(p.datum); return !d || d < mon || p.status === "verworfen"; })
+      .sort(function (a, b) { return sortPosts(b, a); });
+    if (!past.length) return '<div class="notice">Das Archiv füllt sich ab nächster Woche. Hier landen gepostete und verworfene Beiträge, als Grundlage für <span class="mono">/li-audit</span>.</div>';
+    return '<div class="archive">' + past.map(function (p) {
+      var d = parseDate(p.datum), isOpen = !!S.open[p.id];
+      var r = '<div class="row"><span class="when mono">' + esc(d ? fmtShort(d) + d.getFullYear() : p.datum) + '</span><span class="t">' + esc(p.titel || String(p.text || "").slice(0, 60)) + '</span><span class="chip st-' + esc(p.status || "entwurf") + '">' + esc(p.status || "entwurf") + '</span>';
+      r += '<div class="actions" style="grid-column:1/-1"><button class="more" data-act="toggle" data-id="' + esc(p.id) + '">' + (isOpen ? "Zuklappen" : "Text zeigen") + '</button><button class="btn small" data-act="copy" data-id="' + esc(p.id) + '">Kopieren</button>';
+      if (p.status === "verworfen" && canWrite && db) r += '<button class="btn small ghost" data-act="status" data-id="' + esc(p.id) + '" data-st="entwurf">Wiederherstellen</button>';
+      r += '</div>';
+      if (isOpen) r += '<div class="feed">' + marked(p.text) + '</div>';
+      return r + '</div>';
+    }).join("") + '</div>';
+  }
+
+  function guideView() {
+    var cmds = [
+      ["/li-woche", "Autopilot von Hand starten: Plan und alle Beiträge der Woche, hier abgelegt."],
+      ["/li-post", "Eine Idee wird ein Beitrag: drei Hooks, ein Entwurf."],
+      ["/li-plan", "Wochenplan: was, wann, und mit welchen 10 Leuten interagieren."],
+      ["/li-comment", "Kommentar unter einem fremden Beitrag. Beitrag einfügen."],
+      ["/li-reply", "Antworten auf die Kommentare unter einem eigenen Beitrag."],
+      ["/li-carousel", "Karussell: Folientexte und PDF."],
+      ["/li-repurpose", "Blogartikel, Video oder Newsletter wird eine Woche Beiträge."],
+      ["/li-dm", "Vernetzungsnotiz, erste Nachricht, zwei Nachfassungen."],
+      ["/li-inbox", "Posteingang sortieren, Antworten entwerfen."],
+      ["/li-profile", "Profil oder Unternehmensseite auf 100 bewerten und umschreiben."],
+      ["/li-audit", "Auswertung: was hat funktioniert. Analytics-Export einfügen."],
+      ["/li-human", "Beliebigen Text auf KI-Spuren prüfen und bereinigen."]
+    ];
+    return '<div class="guide"><h2>Ablauf jede Woche</h2><ol>' +
+      '<li><p><b>Einmal zu Beginn:</b> unter «Stimme» die Stellen mit [bitte prüfen] durchgehen und korrigieren. Je genauer die Stimme, desto weniger musst du später umschreiben.</p></li>' +
+      '<li><p><b>Freitagnachmittag</b> legt der Autopilot drei Entwürfe für die nächste Woche hier ab und schickt dir eine Mitteilung.</p></li>' +
+      '<li><p><b>Prüfen.</b> Gelb markierte <span class="mono">{Platzhalter}</span> mit echten Zahlen ersetzen (Bearbeiten). Stimmt etwas nicht, verwerfen oder im Chat neu schreiben lassen.</p></li>' +
+      '<li><p><b>Text kopieren</b>, in LinkedIn als digitalONLY AG einfügen und mit dem Uhr-Symbol auf den angegebenen Termin planen. Gibt es einen ersten Kommentar mit Link, diesen direkt nach dem Erscheinen posten.</p></li>' +
+      '<li><p><b>Status setzen:</b> «Geplant», sobald er in LinkedIn geplant ist, «Gepostet», wenn er draussen ist. Das Archiv ist später die Grundlage für die Auswertung.</p></li>' +
+      '<li><p><b>Erste Stunde nach dem Erscheinen:</b> als Bertan einen eigenen Gedanken kommentieren und Kommentare beantworten. Das trägt Seitenbeiträge am meisten.</p></li>' +
+      '</ol><p>Gepostet wird immer von Hand. Automatisches Posten über Browser oder Fremd-Tools verstösst gegen die LinkedIn-Nutzervereinbarung und kann die Seite sperren lassen.</p>' +
+      '<h2>Befehle im Chat</h2><div class="cmds"><table><tbody>' + cmds.map(function (c) { return '<tr><td>' + c[0] + '</td><td>' + esc(c[1]) + '</td></tr>'; }).join("") + '</tbody></table></div></div>';
+  }
+
+  function render() {
+    var app = document.getElementById("app");
+    var h = "";
+    if (dbState === "none") h += '<div class="notice"><b>Die gespeicherten Entwürfe sind nur in Claude sichtbar.</b> Öffne diese Seite in der Claude-App oder auf claude.ai, angemeldet mit dem Konto von digitalONLY.</div>';
+    if (dbState === "error") h += '<div class="notice"><b>Die Entwürfe konnten nicht geladen werden.</b> Seite neu laden. Hilft das nicht, im Chat /li-woche starten, dann kommen die Beiträge direkt im Chat.</div>';
+    if (S.tab === "woche") h += weekView();
+    else if (S.tab === "ideen") h += ideasView();
+    else if (S.tab === "archiv") h += archiveView();
+    else if (S.tab === "stimme") h += stimmeView();
+    else h += guideView();
+    app.innerHTML = h;
+    document.querySelectorAll("nav.tabs a").forEach(function (a) {
+      if (a.dataset.tab === S.tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    var mon = mondayOf(today());
+    var open = S.posts.filter(function (p) { var d = parseDate(p.datum); return d && d >= mon && (p.status || "entwurf") === "entwurf"; }).length;
+    var newIdeas = S.ideen.filter(function (i) { return i.status !== "verwendet"; }).length;
+    var cw = document.getElementById("c-woche"), ci = document.getElementById("c-ideen");
+    cw.textContent = open; cw.hidden = !open; ci.textContent = newIdeas; ci.hidden = !newIdeas;
+    var todoN = S.stimme && S.stimme.text ? (S.stimme.text.match(TODO) || []).length : 0;
+    var cs = document.getElementById("c-stimme"); cs.textContent = todoN; cs.hidden = !todoN;
+    var ap = document.getElementById("autopilot");
+    var last = S.meta && S.meta.letzter_lauf ? '<span>Letzter Lauf: <b class="mono">' + esc(fmtStamp(S.meta.letzter_lauf)) + '</b>' + (S.meta.hinweis ? " · " + esc(S.meta.hinweis) : "") + '</span>' : "";
+    ap.innerHTML = '<span><span class="dot"></span>Autopilot: jeden <b>Freitagnachmittag</b> drei Entwürfe für die nächste Woche</span>' + last;
+  }
+
+  /* ---------- events ---------- */
+
+  function find(id) { for (var i = 0; i < S.posts.length; i++) if (S.posts[i].id === id) return S.posts[i]; return null; }
+  function writeFailed(e) {
+    if (e && e.code === "invalid_argument") { canWrite = false; render(); toast("Nur Lesezugriff auf dieser Seite."); return; }
+    toast("Speichern hat nicht geklappt. Nochmals versuchen.");
+  }
+
+  document.getElementById("app").addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-act]"); if (!b) return;
+    var act = b.dataset.act, id = b.dataset.id, p = id ? find(id) : null;
+    if (act === "copy" && p) { copy(String(p.text || "")); if (placeholders(p.text).length) setTimeout(function () { toast("Achtung: noch Platzhalter im Text."); }, 2300); return; }
+    if (act === "copy-c" && p) { copy(String(p.erster_kommentar || "")); return; }
+    if (act === "toggle") { S.open[id] = !S.open[id]; render(); return; }
+    if (act === "edit" && p) { S.editing = { id: id, draft: String(p.text || "") }; S.confirm = null; render(); var ta = document.getElementById("edit-" + id); if (ta) ta.focus(); return; }
+    if (act === "cancel-edit") { S.editing = null; render(); return; }
+    if (act === "no") { S.confirm = null; render(); return; }
+    if (act === "drop") { S.confirm = "drop:" + id; render(); return; }
+    if (act === "idea-del") { S.confirm = "idea:" + id; render(); return; }
+    if (act === "stimme-edit") { S.stimmeDraft = S.stimme && S.stimme.text ? S.stimme.text : ""; render(); var st0 = document.getElementById("stimme-text"); if (st0) st0.focus(); return; }
+    if (act === "stimme-cancel") { S.stimmeDraft = null; render(); return; }
+    if (!db) return;
+    if (act === "save" && p) {
+      var draft = S.editing ? S.editing.draft : p.text;
+      b.disabled = true;
+      db.doc("posts/" + id).update({ text: draft, bearbeitet: true, aktualisiert: new Date().toISOString() })
+        .then(function () { S.editing = null; render(); toast("Gespeichert."); }, function (e) { b.disabled = false; writeFailed(e); });
+      return;
+    }
+    if (act === "status" && p) {
+      var st = b.dataset.st; if (p.status === st) return;
+      db.doc("posts/" + id).update({ status: st, aktualisiert: new Date().toISOString() })
+        .then(function () { toast(st === "gepostet" ? "Als gepostet markiert." : st === "geplant" ? "Als geplant markiert." : "Status: Entwurf."); }, writeFailed);
+      return;
+    }
+    if (act === "drop-yes" && p) {
+      S.confirm = null;
+      db.doc("posts/" + id).update({ status: "verworfen", aktualisiert: new Date().toISOString() })
+        .then(function () { toast("Verworfen. Liegt im Archiv."); }, writeFailed);
+      return;
+    }
+    if (act === "stimme-save") {
+      var txt = S.stimmeDraft || "";
+      if (!txt.trim()) { toast("Die Stimme darf nicht leer sein."); return; }
+      b.disabled = true;
+      db.doc("config/stimme").set({ text: txt, aktualisiert: new Date().toISOString() })
+        .then(function () { S.stimmeDraft = null; pendingRender = false; render(); toast("Stimme gespeichert. Gilt ab dem nächsten Entwurf."); }, function (e) { b.disabled = false; writeFailed(e); });
+      return;
+    }
+    if (act === "idea-del-yes") {
+      S.confirm = null;
+      db.doc("ideen/" + id).delete().then(function () { toast("Idee entfernt."); }, writeFailed);
+      return;
+    }
+  });
+
+  document.getElementById("app").addEventListener("input", function (ev) {
+    var t = ev.target;
+    if (t.dataset && t.dataset.edit && S.editing) S.editing.draft = t.value;
+    if (t.id === "idee-text") S.ideaDraft = t.value;
+    if (t.id === "stimme-text") S.stimmeDraft = t.value;
+  });
+
+  document.getElementById("app").addEventListener("submit", function (ev) {
+    if (ev.target.id !== "idea-form") return;
+    ev.preventDefault();
+    var text = S.ideaDraft.trim();
+    if (!text) { toast("Erst kurz beschreiben, was passiert ist."); return; }
+    if (!db) return;
+    var id = new Date().toISOString().slice(0, 10) + "-" + Math.random().toString(36).slice(2, 8);
+    var btn = ev.target.querySelector("button[type=submit]"); if (btn) btn.disabled = true;
+    db.collection("ideen").doc(id).set({ text: text, status: "neu", erstellt: new Date().toISOString() })
+      .then(function () { S.ideaDraft = ""; document.activeElement && document.activeElement.blur(); pendingRender = false; render(); toast("Idee abgelegt. Der Autopilot nimmt sie am Freitag."); },
+        function (e) { if (btn) btn.disabled = false; writeFailed(e); });
+  });
+
+  function setTab() {
+    var h = (location.hash || "").replace("#", "");
+    S.tab = ["woche", "ideen", "stimme", "archiv", "anleitung"].indexOf(h) >= 0 ? h : "woche";
+    S.confirm = null; render();
+  }
+  window.addEventListener("hashchange", setTab);
+  setTab();
+
+  /* ---------- data ---------- */
+
+  function start() {
+    if (!window.claude || typeof window.claude.use !== "function") { dbState = "none"; render(); return; }
+    window.claude.use("user").then(function (u) {
+      user = u;
+      if (u && typeof u.can === "function") {
+        Promise.resolve(u.can("data.write")).then(function (ok) { if (ok === false) { canWrite = false; render(); } }, function () {});
+      }
+    }, function () {});
+    window.claude.use("db").then(function (d) {
+      if (!d) { dbState = "none"; render(); return; }
+      db = d; dbState = "ok";
+      var fail = function () { dbState = "error"; render(); };
+      db.collection("posts").onSnapshot(function (snap) {
+        S.posts = snap.docs.map(function (x) { var o = Object.assign({}, x.data()); o.id = x.id; return o; });
+        scheduleRender();
+      }, fail);
+      db.collection("ideen").onSnapshot(function (snap) {
+        S.ideen = snap.docs.map(function (x) { var o = Object.assign({}, x.data()); o.id = x.id; return o; });
+        scheduleRender();
+      }, fail);
+      db.doc("config/stimme").onSnapshot(function (snap) { S.stimme = snap.exists ? snap.data() : null; scheduleRender(); }, function () {});
+      db.doc("meta/autopilot").onSnapshot(function (snap) { S.meta = snap.exists ? snap.data() : null; scheduleRender(); }, function () {});
+      render();
+    }, function () { dbState = "error"; render(); });
+  }
+  start();
+})();
+</script>
+
+</body></html>
