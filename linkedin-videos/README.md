@@ -24,3 +24,18 @@ Untertitel eingebrannt (die meisten schauen ohne Ton).
 Die Teststimme ist synthetisch. Für echte Beiträge Kyrills eigene Stimme
 aufnehmen oder einen lizenzierten Sprachdienst verwenden; die Taktung kommt
 dann aus den gemessenen Satzlängen der Aufnahme.
+
+## Mit echter Stimme (`2026-11-10-verzeichnis-abo-kyrill.mp4`)
+
+Kyrill hat den Text auf Mundart eingesprochen (WhatsApp-Sprachmemo), die
+Untertitel sind Hochdeutsch. Ablauf:
+
+1. Aufnahme mit `quelle/transcribe.py` in Sätze zerlegen (Whisper small über
+   sherpa-onnx, offline; Modell und VAD von den GitHub-Releases von
+   k2-fsa/sherpa-onnx, `asr-models`). Liefert Start/Ende jedes Satzes.
+2. Stille am Anfang/Ende, Geräusche und zu lange Pausen mit ffmpeg `atrim`
+   herausschneiden, dann `highpass`, `afftdn`, `acompressor`, `loudnorm -14 LUFS`.
+3. Zeitmarken in `timeline_kyrill.json` eintragen: `segs` (Szenen),
+   `capsegs` (Untertitel), `ev` (Blickfänger: Stempel, Sprechblasen, Beacons,
+   CHF 0, Knopf).
+4. `anim_kyrill.html` verwendet diese Zeitmarken (`TL.ev`), sonst wie oben.
