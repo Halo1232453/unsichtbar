@@ -1,0 +1,86 @@
+{
+ "total": 45.316,
+ "segs": [
+  {
+   "id": "hook",
+   "say": "Eine unbequeme Frage an alle Betriebe mit Verzeichnis-Abo.",
+   "sub": "Eine unbequeme Frage an alle KMU mit Verzeichnis-Abo.",
+   "file": "seg00.wav",
+   "dur": 3.6,
+   "start": 0.5,
+   "end": 4.1
+  },
+  {
+   "id": "frage",
+   "say": "Wie viele Anrufe hat Ihnen Ihr Abo letztes Jahr gebracht?",
+   "sub": "Wie viele Anrufe hat Ihnen Ihr Abo letztes Jahr gebracht?",
+   "file": "seg01.wav",
+   "dur": 3.44,
+   "start": 4.55,
+   "end": 7.99
+  },
+  {
+   "id": "stand",
+   "say": "Wissen Sie es nicht aus dem Stand? Dann liegt genau da das Problem.",
+   "sub": "Wissen Sie's nicht aus dem Stand? Dann liegt genau da das Problem.",
+   "file": "seg02.wav",
+   "dur": 3.232,
+   "start": 8.44,
+   "end": 11.672
+  },
+  {
+   "id": "saetze",
+   "say": "Typische Verkaufssätze kennen Sie bestimmt. Ihre Konkurrenz ist schon dabei. Ohne Eintrag findet Sie niemand. Das Angebot gilt nur bis Ende Monat.",
+   "sub": "Typische Verkaufssätze kennen Sie bestimmt.",
+   "file": "seg03.wav",
+   "dur": 7.76,
+   "start": 12.122,
+   "end": 19.882
+  },
+  {
+   "id": "keiner",
+   "say": "Keiner dieser Sätze sagt, ob es sich für Sie lohnt.",
+   "sub": "Keiner dieser Sätze sagt, ob es sich für Sie lohnt.",
+   "file": "seg04.wav",
+   "dur": 2.544,
+   "start": 20.332,
+   "end": 22.876
+  },
+  {
+   "id": "rechnung",
+   "say": "Darum: Holen Sie die Rechnung hervor. Fragen Sie nach Aufrufen, Klicks und Anrufen.",
+   "sub": "Holen Sie die Rechnung hervor. Fragen Sie nach Aufrufen, Klicks, Anrufen.",
+   "file": "seg05.wav",
+   "dur": 4.912,
+   "start": 23.326,
+   "end": 28.238
+  },
+  {
+   "id": "profil",
+   "say": "Und legen Sie das neben Ihr Google-Profil. Das kostet nichts. Und Sie sehen Monat für Monat, wer anruft.",
+   "sub": "Legen Sie das neben Ihr Google-Profil. Kostet CHF 0, und Sie sehen Monat für Monat, wer anruft.",
+   "file": "seg06.wav",
+   "dur": 5.696,
+   "start": 28.688,
+   "end": 34.384
+  },
+  {
+   "id": "blind",
+   "say": "Vielleicht lohnt sich Ihr Abo. Nur blind zahlen, das sollten Sie nicht mehr.",
+   "sub": "Vielleicht lohnt sich Ihr Abo. Nur blind zahlen, das sollten Sie nicht mehr.",
+   "file": "seg07.wav",
+   "dur": 3.824,
+   "start": 34.834,
+   "end": 38.658
+  },
+  {
+   "id": "cta",
+   "say": "Wann haben Sie Ihr Abo zum letzten Mal hinterfragt? Schreiben Sie es in die Kommentare.",
+   "sub": "Wann haben Sie Ihr Abo zum letzten Mal hinterfragt? Schreiben Sie's in die Kommentare.",
+   "file": "seg08.wav",
+   "dur": 4.208,
+   "start": 39.108,
+   "end": 43.316
+  }
+ ]
+}

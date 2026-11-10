@@ -1,0 +1,186 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--acc:#ff3d2e;--bg:#f2f1ed}
+body{width:1080px;height:1920px;background:var(--bg);font-family:Jost,sans-serif;color:#111;position:relative;overflow:hidden}
+.abs{position:absolute}
+.mono{font-family:'JetBrains Mono',monospace}
+#prog{left:0;top:0;height:10px;background:var(--acc);width:0}
+.top{left:70px;right:70px;top:70px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #111;padding-bottom:24px}
+.top img{height:90px}
+.tag{background:#111;color:#fff;font:700 20px 'JetBrains Mono',monospace;letter-spacing:3px;padding:14px 22px}
+.tag i{color:var(--acc);font-style:normal}
+.scene{left:70px;right:70px;top:260px;height:1080px;opacity:0}
+/* A hook */
+#A .big{font-weight:800;font-size:150px;line-height:.95;letter-spacing:-5px;margin-top:180px}
+#A .big span{display:block}
+#A .sub{font:700 30px 'JetBrains Mono',monospace;letter-spacing:4px;margin-top:50px}
+/* B frage */
+#B .h{font-weight:800;font-size:104px;line-height:1.0;letter-spacing:-3.5px;margin-top:60px}
+#B em{font-style:normal;position:relative}
+#B em:after{content:"";position:absolute;left:0;bottom:6px;height:26px;width:var(--u,0%);background:var(--acc);z-index:-1}
+#B .count{margin-top:90px;display:flex;align-items:center;gap:30px;font:700 44px 'JetBrains Mono',monospace}
+#B .count b{background:#111;color:#fff;font-size:120px;padding:6px 34px;min-width:250px;text-align:center}
+/* cards */
+.card{background:#fff;box-shadow:0 22px 50px rgba(0,0,0,.14)}
+.bill{left:60px;top:120px;width:820px;padding:44px 52px 56px}
+.bh{font:700 28px 'JetBrains Mono',monospace;letter-spacing:3px;text-align:center;padding-bottom:20px;border-bottom:4px dashed #111}
+.bt{font-weight:800;font-size:56px;padding:26px 0 8px}
+.r{display:flex;justify-content:space-between;align-items:center;font:400 40px 'JetBrains Mono',monospace;padding:24px 10px;border-bottom:3px dotted #aaa;position:relative}
+.r b{font-weight:700}
+.r.on{background:rgba(255,61,46,.12)}
+.qq{background:#111;color:#fff;padding:0 18px;display:inline-block}
+.stamp{border:8px solid var(--acc);color:var(--acc);font:700 64px 'JetBrains Mono',monospace;letter-spacing:5px;padding:14px 30px;background:rgba(242,241,237,.92);white-space:nowrap}
+.bc{width:44px;height:44px;border-radius:50%;background:var(--acc);color:#fff;font:800 26px Jost;display:flex;align-items:center;justify-content:center;z-index:5}
+.bc:before,.bc:after{content:"";position:absolute;inset:0;border-radius:50%;border:5px solid var(--acc);transform:scale(var(--p1,1));opacity:var(--o1,0)}
+.bc:after{transform:scale(var(--p2,1));opacity:var(--o2,0)}
+.call{background:#111;color:#fff;font:700 30px 'JetBrains Mono',monospace;letter-spacing:1px;padding:14px 20px;white-space:nowrap;z-index:6}
+/* D bubbles */
+.lbl{font:700 30px 'JetBrains Mono',monospace;letter-spacing:4px}
+.q{background:#fff;box-shadow:0 22px 50px rgba(0,0,0,.14);padding:36px 44px;font-weight:700;font-size:62px;line-height:1.08;letter-spacing:-1.5px;white-space:nowrap}
+.q:after{content:"";position:absolute;bottom:-32px;border-left:32px solid transparent;border-right:32px solid transparent;border-top:34px solid #fff}
+.q.l:after{left:70px}.q.r2:after{right:70px}
+.strike{height:12px;background:var(--acc);left:-20px;top:50%;margin-top:-6px;width:0}
+/* G phone */
+.phone{left:170px;top:0px;width:600px;height:940px;background:#111;border-radius:76px;padding:22px}
+.scr{background:#fff;border-radius:56px;height:100%;padding:72px 40px 30px;position:relative;overflow:hidden}
+.notch{position:absolute;left:50%;top:18px;width:160px;height:36px;background:#111;border-radius:20px;transform:translateX(-50%)}
+.ph{font-weight:800;font-size:44px}
+.ps{font:400 24px 'JetBrains Mono',monospace;color:#666;margin:6px 0 26px}
+.kpi{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px dotted #bbb;padding:18px 0}
+.kpi span{font:400 28px 'JetBrains Mono',monospace}
+.kpi b{font:800 44px Jost}
+.chart{display:flex;align-items:flex-end;gap:14px;height:280px;margin-top:44px;border-bottom:4px solid #111;padding:0 6px}
+.chart div{flex:1;background:#111;border-radius:6px 6px 0 0;height:0}
+.chart .hl{background:var(--acc)}
+.months{display:flex;gap:14px;padding:10px 6px 0;font:400 20px 'JetBrains Mono',monospace;color:#666}
+.months span{flex:1;text-align:center}
+.ex{font:400 18px 'JetBrains Mono',monospace;color:#999;margin-top:14px}
+/* H */
+#H .s1{font-weight:800;font-size:120px;line-height:1;letter-spacing:-4px;margin-top:120px}
+#H .s2{font-weight:800;font-size:120px;line-height:1;letter-spacing:-4px;margin-top:30px;color:var(--acc)}
+/* I cta */
+#I .panel{background:#111;color:#fff;padding:70px 60px;margin-top:60px}
+#I .panel p{font-weight:800;font-size:84px;line-height:1.02;letter-spacing:-2.5px}
+#I .btn{margin-top:70px;display:inline-flex;align-items:center;gap:24px;background:var(--acc);color:#fff;font:800 50px Jost;padding:26px 44px}
+#I .who{margin-top:90px;font:700 30px 'JetBrains Mono',monospace;letter-spacing:4px}
+/* captions */
+#cap{left:70px;right:70px;top:1400px;height:300px;display:flex;align-items:center;justify-content:center;text-align:center}
+#cap div{font-weight:800;font-size:66px;line-height:1.12;letter-spacing:-1.5px}
+#cap span{opacity:0;padding:0 4px;border-radius:6px}
+#cap span.vis{opacity:1}
+#cap span.cur{background:#111;color:#fff}
+.foot{left:70px;right:70px;bottom:120px;border-top:4px solid #111;padding-top:24px;display:flex;justify-content:space-between;font:700 22px 'JetBrains Mono',monospace;letter-spacing:4px}
+</style></head><body>
+<div id="prog" class="abs"></div>
+<div class="top abs"><img src="logo.png"><div class="tag"><i>●</i> UNBEQUEME FRAGE</div></div>
+
+<div id="A" class="scene abs"><div class="lbl">// AN ALLE KMU MIT VERZEICHNIS-ABO</div><div class="big"><span id="a1">Eine</span><span id="a2">unbequeme</span><span id="a3" style="color:var(--acc)">Frage.</span></div></div>
+
+<div id="B" class="scene abs"><div class="lbl">// VERZEICHNIS-ABO · CHECK</div><div class="h">Wie viele <em id="bem">Anrufe</em> hat Ihnen Ihr Abo letztes Jahr gebracht?</div>
+<div class="count"><span>ANRUFE 2025</span><b id="cnt">?</b></div></div>
+
+<div id="C" class="scene abs">
+ <div class="card bill abs" id="bill"><div class="bh">RECHNUNG 2025</div><div class="bt">Verzeichnis-Abo</div>
+  <div class="r" id="rg"><span>Jahresgebühr</span><b>CHF ?</b></div>
+  <div class="r" id="ra"><span>Aufrufe</span><b class="qq">?</b></div>
+  <div class="r" id="rk"><span>Klicks</span><b class="qq">?</b></div>
+  <div class="r" id="rn" style="border:0"><span>Anrufe</span><b class="qq">?</b></div></div>
+ <div class="bc abs" id="bc1" style="left:900px;top:470px">1</div>
+ <div class="bc abs" id="bc2" style="left:900px;top:600px">2</div>
+ <div class="bc abs" id="bc3" style="left:900px;top:730px">3</div>
+ <div class="stamp abs" id="stamp" style="left:150px;top:860px">BLIND BEZAHLT</div>
+</div>
+
+<div id="D" class="scene abs"><div class="lbl" id="dl">// TYPISCHE VERKAUFSSÄTZE</div>
+ <div class="q l abs" id="q1" style="left:0;top:120px">«Ihre Konkurrenz<br>ist schon dabei.»<div class="strike abs" id="s1"></div></div>
+ <div class="q r2 abs" id="q2" style="right:0;top:430px">«Ohne Eintrag findet<br>Sie niemand.»<div class="strike abs" id="s2"></div></div>
+ <div class="q l abs" id="q3" style="left:20px;top:740px">«Das Angebot gilt<br>nur bis Ende Monat.»<div class="strike abs" id="s3"></div></div>
+ <div class="stamp abs" id="dstamp" style="right:10px;top:960px;font-size:46px">LOHNT ES SICH? ?</div>
+</div>
+
+<div id="G" class="scene abs"><div class="phone abs" id="phone"><div class="scr"><div class="notch"></div>
+ <div class="ph">Ihr Google-Profil</div><div class="ps">Leistung · letzte 12 Monate</div>
+ <div class="kpi" id="k1"><span>Kosten</span><b>CHF 0</b></div>
+ <div class="kpi" id="k2"><span>Anrufe</span><b>Monat für Monat</b></div>
+ <div class="chart"><div></div><div></div><div></div><div></div><div></div><div></div><div class="hl" id="hl"></div></div>
+ <div class="months"><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span></div>
+ <div class="ex">Darstellung beispielhaft</div></div></div>
+ <div class="bc abs" id="bc4" style="left:830px;top:290px">✓</div>
+ <div class="call abs" id="free" style="left:330px;top:970px">HIER STEHT'S. GRATIS.</div>
+</div>
+
+<div id="H" class="scene abs"><div class="lbl">// IHR ABO</div><div class="s1" id="h1">Vielleicht lohnt es sich.</div><div class="s2" id="h2">Nur blind zahlen? Nicht mehr.</div></div>
+
+<div id="I" class="scene abs"><div class="panel" id="panel"><p>Wann haben Sie Ihr Abo zum letzten Mal hinterfragt?</p><div class="btn" id="btn">💬 In die Kommentare</div></div>
+ <div class="who">■ KYRILL ELSENSOHN · DIGITALONLY AG</div></div>
+
+<div id="cap" class="abs"><div id="capt"></div></div>
+<div class="foot abs"><span>■ NUR BLIND ZAHLEN SOLLTEN SIE NICHT</span><span>KYRILL ELSENSOHN</span></div>
+<script>
+const TL=__TL__;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const R=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);
+const back=x=>{const c=1.7;x=x-1;return 1+x*x*((c+1)*x+c)};
+function seg(id){return TL.segs.find(s=>s.id==id)}
+const S={}; TL.segs.forEach(s=>S[s.id]=s);
+const scenes=[['A',0,S.frage.start-.15],['B',S.frage.start-.15,S.stand.start-.2],['C',S.stand.start-.2,S.saetze.start-.15],
+ ['D',S.saetze.start-.15,S.rechnung.start-.2],['C',S.rechnung.start-.2,S.profil.start-.2],['G',S.profil.start-.2,S.blind.start-.2],
+ ['H',S.blind.start-.2,S.cta.start-.2],['I',S.cta.start-.2,TL.total+1]];
+// captions: chunks
+const CAPS=[];
+TL.segs.forEach(s=>{const words=s.cap.split(' ');const chunks=[];let c=[];
+ words.forEach(w=>{c.push(w);if(c.length>=6||/[.?!:»]$/.test(w)&&c.length>=2){chunks.push(c);c=[]}});if(c.length)chunks.push(c);
+ const total=words.join('').length;let acc=0;
+ chunks.forEach(ch=>{const ws=[];ch.forEach(w=>{const st=s.start+acc/total*s.dur;acc+=w.length;ws.push({w,st})});
+  CAPS.push({ws,start:ws[0].st,end:s.start+acc/total*s.dur})});
+ CAPS[CAPS.length-1].end=s.end+0.35;});
+for(let i=0;i<CAPS.length-1;i++) CAPS[i].end=Math.min(Math.max(CAPS[i].end+.25,CAPS[i].end),CAPS[i+1].start);
+let lastCap=-1;
+function pulse(el,t,on){if(!on){el.style.opacity=0;return}el.style.opacity=1;const p=(t*1.2)%1,p2=((t*1.2)+.5)%1;
+ el.style.setProperty('--p1',1+p*1.6);el.style.setProperty('--o1',1-p);el.style.setProperty('--p2',1+p2*1.6);el.style.setProperty('--o2',1-p2);
+ el.style.transform='scale('+(on===true?1:on)+')';}
+window.render=function(t){
+ $('prog').style.width=(t/TL.total*100)+'%';
+ const vis={};scenes.forEach(([id,a,b])=>{if(t>=a-.01&&t<b+.3){const o=R(t,a,a+.3)*(1-R(t,b-.05,b+.25));vis[id]=Math.max(vis[id]||0,o)}});
+ ['A','B','C','D','G','H','I'].forEach(id=>{const o=vis[id]||0;$(id).style.opacity=o;$(id).style.transform='translateY('+((1-o)*40)+'px)'});
+ // A
+ ['a1','a2','a3'].forEach((id,i)=>{const p=back(R(t,.5+i*.35,.5+i*.35+.45));$(id).style.transform='translateY('+((1-p)*80)+'px)';$(id).style.opacity=R(t,.5+i*.35,.7+i*.35)});
+ // B
+ const b0=S.frage.start;$('bem').style.setProperty('--u',(eo(R(t,b0+.6,b0+1.1))*100)+'%');
+ const cnt=$('cnt'); if(t<b0+1.2) cnt.textContent='?'; else if(t<S.frage.end-.3) cnt.textContent=String(Math.floor((Math.sin(t*37)+1)*499)).padStart(3,'0'); else cnt.textContent='?';
+ cnt.style.background=(t>=S.frage.end-.3)?'var(--acc)':'#111';
+ // C (two uses)
+ const inC1=t<S.saetze.start; const c0=inC1?S.stand.start:S.rechnung.start;
+ const bp=back(R(t,c0-.2,c0+.4)); $('bill').style.transform='rotate('+(-3+ (1-bp)*-8)+'deg) translateX('+((1-bp)*-300)+'px)';
+ const st=$('stamp');
+ if(inC1){const s0=S.stand.start+1.9;const sp=R(t,s0,s0+.18);st.style.opacity=sp;st.style.transform='rotate(-12deg) scale('+(2.2-1.2*sp)+')';
+   pulse($('bc1'),t,t>S.stand.start+.4);$('bc1').style.top='470px';pulse($('bc2'),t,false);pulse($('bc3'),t,t>S.stand.start+1.0);$('bc3').style.top='730px';
+   $('bc1').textContent='?';$('bc3').textContent='?';['ra','rk','rn','rg'].forEach(i=>$(i).classList.remove('on'));}
+ else{st.style.opacity=0;const r0=S.rechnung.start;const marks=[['ra','bc1',r0+3.0,'470px'],['rk','bc2',r0+3.7,'600px'],['rn','bc3',r0+4.2,'730px']];
+   $('bc1').textContent='1';$('bc2').textContent='2';$('bc3').textContent='3';
+   marks.forEach(([row,bc,tm,top])=>{const on=t>=tm;$(row).classList.toggle('on',on);pulse($(bc),t,on?back(R(t,tm,tm+.3)):false);$(bc).style.top=top});}
+ // D
+ const d0=S.saetze.start;[[ 'q1',d0+2.26],['q2',d0+4.0],['q3',d0+5.65]].forEach(([id,tm],i)=>{const p=back(R(t,tm-.1,tm+.3));const e=$(id);e.style.opacity=R(t,tm-.1,tm+.1);e.style.transform='rotate('+[-2,1.5,-1][i]+'deg) scale('+(.6+.4*p)+')';
+   const k=S.keiner.start+.2+i*.35;e.style.filter='grayscale(1) opacity('+(1-.45*R(t,k,k+.3))+')';$('s'+(i+1)).style.width=(eo(R(t,k,k+.3))*105)+'%'});
+ const ds=$('dstamp');const dk=S.keiner.end-.6;const dsp=R(t,dk,dk+.18);ds.style.opacity=dsp;ds.style.transform='rotate(-8deg) scale('+(2-dsp)+')';
+ // G
+ const g0=S.profil.start;const gp=back(R(t,g0-.2,g0+.45));$('phone').style.transform='translateY('+((1-gp)*600)+'px) rotate('+((1-gp)*6)+'deg)';
+ const hs=[38,52,45,64,58,72,92];document.querySelectorAll('.chart div').forEach((d,i)=>{d.style.height=(hs[i]*eo(R(t,g0+.5+i*.12,g0+1.1+i*.12)))+'%'});
+ $('k1').style.background=t>g0+2.35&&t<g0+3.6?'rgba(255,61,46,.15)':'transparent';$('k2').style.background=t>g0+3.6?'rgba(255,61,46,.15)':'transparent';
+ pulse($('bc4'),t,t>g0+2.35?back(R(t,g0+2.35,g0+2.65)):false);
+ const fp=back(R(t,g0+3.4,g0+3.8));$('free').style.opacity=R(t,g0+3.4,g0+3.6);$('free').style.transform='rotate(-4deg) scale('+(.5+.5*fp)+')';
+ // H
+ const h0=S.blind.start;[['h1',h0],['h2',h0+1.75]].forEach(([id,tm])=>{const p=back(R(t,tm,tm+.45));$(id).style.opacity=R(t,tm,tm+.2);$(id).style.transform='translateX('+((1-p)*-120)+'px)'});
+ // I
+ const i0=S.cta.start;const ip=back(R(t,i0-.1,i0+.4));$('panel').style.transform='scale('+(.85+.15*ip)+')';
+ const bt=$('btn');const bpp=R(t,i0+2.6,i0+3.0);bt.style.opacity=bpp;bt.style.transform='scale('+(1+.06*Math.sin(Math.max(0,t-i0-3)*6)*(t>i0+3?1:0))+')';
+ // captions
+ let ci=CAPS.findIndex(c=>t>=c.start-.05&&t<c.end);const ce=$('capt');
+ if(ci<0){ce.innerHTML='';lastCap=-1}else{if(ci!==lastCap){ce.innerHTML=CAPS[ci].ws.map(x=>'<span>'+x.w+'</span>').join(' ');lastCap=ci}
+  const sp=ce.querySelectorAll('span');let cur=-1;CAPS[ci].ws.forEach((x,i)=>{const v=t>=x.st-.05;sp[i].classList.toggle('vis',v);if(v)cur=i});sp.forEach((s,i)=>s.classList.toggle('cur',i===cur))}
+};
+</script></body></html>
