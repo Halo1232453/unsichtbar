@@ -16,6 +16,11 @@ streichen. Sobald es drei eigene Beiträge gibt: im Chat einfügen und sagen
   Sitz in Zug. Die Seite spricht als «wir».
 - **Person, die vorkommen darf:** Bertan Findik, Partner. Kommentare, DMs und
   persönliche Reposts kommen von ihm als Person.
+- **Weitere Personen mit eigenem Profil:** Kyrill Elsensohn und Cas
+  **[bitte ergänzen: Rolle, Nachname, Hintergrund, was erzählt werden darf]**.
+  Beiträge für diese Profile in der Ich-Form, aber nur mit Erfahrungen, die
+  hier stehen oder die die Person selbst geliefert hat. Bis dahin: Meinungs-
+  und Wissensbeiträge ohne persönliche Erlebnisse.
 - **Bertans Hintergrund (für Insider-Beiträge):** ab 2021 im Aussendienst als
   Digital Marketing Consultant bei einem grossen Schweizer Anbieter von
   Online-Verzeichnissen und lokaler Werbung, also Verkaufsgespräche mit KMU von

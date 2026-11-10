@@ -104,7 +104,8 @@ Zentrale: https://claude.ai/artifact/MVPo6B1gjorqGyErm589pg (private Seite in Cl
 - Für /li-plan und /li-audit: `posts` lesen, das ist die Beitragsgeschichte.
 - **Raster-Ansicht.** Die Zentrale zeigt jeden Beitrag als Kachel. Zusätzliche
   Felder pro Beitrag: `konto` (`"seite"` für die Unternehmensseite,
-  `"kyrill"` für Kyrill Elsensohns Profil) und `medien`: Liste von
+  `"bertan"` für Bertan Findik, `"kyrill"` für Kyrill Elsensohn, `"cas"` für
+  Cas; ohne Angabe gilt `"seite"`) und `medien`: Liste von
   `{"id": "<Asset-ID>", "typ": "bild"|"video", "name": "<Dateiname>"}`.
 - **Bilder und Videos anhängen.** Jedes Bild oder Video zu einem Beitrag mit
   dem Artifact-Werkzeug (`asset: true`, `url` = Zentrale) hochladen und die

@@ -78,7 +78,13 @@ nav.tabs a:hover:not([aria-current]) { border-color: var(--ink); }
 .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .when { font: 700 12px var(--mono); letter-spacing: .06em; margin-right: auto; font-variant-numeric: tabular-nums; }
 .chip { font: 700 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 7px; border: 1.5px solid var(--ink); }
-.chip.k-kyrill { background: var(--ink); color: var(--bg); }
+.chip.k-bertan, .chip.k-kyrill, .chip.k-cas { background: var(--ink); color: var(--bg); }
+.section { display: grid; gap: 12px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 6px; }
+.sec-head h2 { margin: 0; font-weight: 800; font-size: 24px; }
+.sec-head span { font: 400 13px var(--mono); color: var(--muted); }
+.sec-head b { margin-left: auto; font: 700 12px var(--mono); }
+.sec-empty { border: 2px dashed var(--line); padding: 16px 18px; color: var(--muted); }
 .chip.s-entwurf { border-color: var(--review); color: var(--review); }
 .chip.s-geplant { border-color: var(--acc); color: var(--acc); }
 .chip.s-gepostet { border-color: var(--pass); color: var(--pass); }
@@ -184,7 +190,8 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
   var DAYS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
   var MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
   var STATUS = [["entwurf", "Entwurf"], ["geplant", "Geplant"], ["gepostet", "Gepostet"]];
-  var KONTO = { seite: "Seite", kyrill: "Kyrill" };
+  var KONTO = { seite: "Seite", bertan: "Bertan", kyrill: "Kyrill", cas: "Cas" };
+  var SECTIONS = [["seite", "Unternehmensseite digitalONLY AG", "spricht als «wir»"], ["bertan", "Bertan Findik", "persönliches Profil"], ["kyrill", "Kyrill Elsensohn", "persönliches Profil"], ["cas", "Cas", "persönliches Profil"]];
   var PH = /\{[^{}\n]{1,40}\}/g, TODO = /\[bitte [^\]\n]{0,80}\]/g;
   var db = null, assets = null, downloads = null, canWrite = true, dbState = "loading", pendingRender = false;
   var S = { posts: [], ideen: [], meta: null, stimme: null, stimmeDraft: null, tab: "raster", fK: "alle", fS: "offen",
@@ -298,12 +305,17 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
     var phN = all.filter(function (p) { return placeholders(p.text).length; }).length;
     var mN = all.reduce(function (n, p) { return n + medien(p).length; }, 0);
     var h = '<div class="bar"><div class="filters">';
-    h += '<div class="seg" role="group" aria-label="Konto">' + [["alle", "Alle"], ["seite", "Seite"], ["kyrill", "Kyrill"]].map(function (x) { return '<button data-act="fk" data-v="' + x[0] + '" aria-pressed="' + (S.fK === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div>';
+    h += '<div class="seg" role="group" aria-label="Konto">' + [["alle", "Alle"], ["seite", "Seite"], ["bertan", "Bertan"], ["kyrill", "Kyrill"], ["cas", "Cas"]].map(function (x) { return '<button data-act="fk" data-v="' + x[0] + '" aria-pressed="' + (S.fK === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div>';
     h += '<div class="seg" role="group" aria-label="Status">' + [["offen", "Offen"], ["entwurf", "Entwurf"], ["geplant", "Geplant"], ["gepostet", "Gepostet"], ["alle", "Alle"]].map(function (x) { return '<button data-act="fs" data-v="' + x[0] + '" aria-pressed="' + (S.fS === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div>';
     h += '</div><div class="stats"><span><b>' + open + '</b> Entwürfe</span><span><b>' + phN + '</b> mit Platzhalter</span><span><b>' + mN + '</b> Bilder/Videos</span></div></div>';
-    if (!list.length) {
-      h += '<div class="notice"><b>Keine Beiträge in dieser Auswahl.</b><br>Neue Beiträge kommen über den Chat: <span class="mono">/li-post</span> für einen, <span class="mono">/li-woche</span> für die ganze Woche. Sie erscheinen hier automatisch.</div>';
-    } else h += '<div class="grid">' + list.map(card).join("") + '</div>';
+    SECTIONS.forEach(function (s) {
+      if (S.fK !== "alle" && S.fK !== s[0]) return;
+      var mine = list.filter(function (p) { return (p.konto || "seite") === s[0]; });
+      h += '<section class="section"><div class="sec-head"><h2>' + esc(s[1]) + '</h2><span>' + esc(s[2]) + '</span><b>' + mine.length + (mine.length === 1 ? " Beitrag" : " Beiträge") + '</b></div>';
+      if (mine.length) h += '<div class="grid">' + mine.map(card).join("") + '</div>';
+      else h += '<div class="sec-empty">Keine Beiträge in dieser Auswahl. Im Chat zum Beispiel <span class="mono">/li-post ' + (s[0] === "seite" ? "Thema" : "Thema, für " + esc(KONTO[s[0]])) + '</span> schreiben, dann erscheint der Beitrag hier.</div>';
+      h += '</section>';
+    });
     return h;
   }
 
@@ -377,7 +389,7 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
 
   function guideView() {
     var cmds = [
-      ["/li-post", "Eine Idee wird ein Beitrag: drei Hooks, ein Entwurf. Landet hier im Raster."],
+      ["/li-post", "Eine Idee wird ein Beitrag für die Unternehmensseite. Mit «für Bertan», «für Kyrill» oder «für Cas» für das persönliche Profil."],
       ["/li-woche", "Plan und alle Beiträge der nächsten Woche in einem Durchgang."],
       ["Bild dazu", "Im Chat «passendes Bild» schreiben. Das Bild hängt danach am Beitrag."],
       ["Video", "Sprachmemo (Sprachmemos-App, nicht WhatsApp) im Chat hochladen. Daraus entsteht ein Video mit Untertiteln."],
