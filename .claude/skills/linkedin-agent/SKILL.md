@@ -26,7 +26,7 @@ Lies vor jedem Modus die Stimme, in dieser Reihenfolge, und nimm die erste, die
 es gibt:
 
 1. **Agent-Zentrale**, wenn das Werkzeug `ArtifactData` verfügbar ist:
-   `ArtifactData` `get` mit `url` = https://claude.ai/artifact/1XbSUWBrMmYWi2BbKLrswU,
+   `ArtifactData` `get` mit `url` = https://claude.ai/artifact/MVPo6B1gjorqGyErm589pg,
    `collection` = `config`, `doc_id` = `stimme`. Das Feld `text` ist die
    aktuelle, von Bertan gepflegte Stimme.
 2. `~/.claude/linkedin/voice.md` (Claude Code, lokale Fassung).
@@ -88,7 +88,7 @@ GPTZero, Originality, Copyleaks oder Turnitin. Nie «unerkennbar» versprechen.
 
 ## Ablage: die Agent-Zentrale
 
-Zentrale: https://claude.ai/artifact/1XbSUWBrMmYWi2BbKLrswU (private Seite in Claude, Datenbank über `ArtifactData`).
+Zentrale: https://claude.ai/artifact/MVPo6B1gjorqGyErm589pg (private Seite in Claude, Datenbank über `ArtifactData`).
 
 | Sammlung | Inhalt |
 | --- | --- |
@@ -102,6 +102,16 @@ Zentrale: https://claude.ai/artifact/1XbSUWBrMmYWi2BbKLrswU (private Seite in Cl
   `if_version` ändern, nie einen Beitrag mit Status `geplant` oder `gepostet`
   überschreiben.
 - Für /li-plan und /li-audit: `posts` lesen, das ist die Beitragsgeschichte.
+- **Raster-Ansicht.** Die Zentrale zeigt jeden Beitrag als Kachel. Zusätzliche
+  Felder pro Beitrag: `konto` (`"seite"` für die Unternehmensseite,
+  `"kyrill"` für Kyrill Elsensohns Profil) und `medien`: Liste von
+  `{"id": "<Asset-ID>", "typ": "bild"|"video", "name": "<Dateiname>"}`.
+- **Bilder und Videos anhängen.** Jedes Bild oder Video zu einem Beitrag mit
+  dem Artifact-Werkzeug (`asset: true`, `url` = Zentrale) hochladen und die
+  zurückgegebene `id` per `ArtifactData` `update` (mit `if_version`) in
+  `medien` des Beitrags eintragen. Bestehende Einträge in `medien` behalten.
+- Logo für alle Bilder: `assets/logo-digitalonly.png`. Vorlagen für Videos:
+  `linkedin-videos/quelle/` im Repo.
 - Ohne `ArtifactData` (z.B. Claude Code ohne Zugriff): `~/.claude/linkedin/log.md`
   und `plan.md` verwenden, sonst die Log-Zeile am Ende ausgeben.
 

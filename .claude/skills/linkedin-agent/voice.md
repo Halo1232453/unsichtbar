@@ -137,7 +137,7 @@ Wofür die Seite bekannt sein soll. /li-plan und /li-woche rotieren darüber.
 Die Agent-Zentrale ist eine private Seite in Claude, in der die Entwürfe jeder
 Woche landen und Ideen gesammelt werden.
 
-- **URL:** https://claude.ai/artifact/1XbSUWBrMmYWi2BbKLrswU
+- **URL:** https://claude.ai/artifact/MVPo6B1gjorqGyErm589pg
 - Die gepflegte Fassung dieser Stimme liegt in der Zentrale im Tab «Stimme»
   (`config/stimme`). Diese Datei ist nur die Vorlage.
 - **Sammlungen:** `posts` (ein Dokument pro Beitrag, ID `JJJJ-MM-TT-tag`, z.B.
