@@ -130,7 +130,11 @@ Wofür die Seite bekannt sein soll. /li-plan und /li-woche rotieren darüber.
 - Nach jedem Seitenbeitrag: Bertan kommentiert in der ersten Stunde mit einem
   eigenen Gedanken und teilt ihn bei Bedarf im persönlichen Profil.
 
-## Marke (für Karussells)
+## Marke (Bilder, Videos, Karussells)
+
+- **Stil für Bilder und Videos:** Premium-Stil nach `modi/li-visual.md` (dunkel,
+  Lichtschein, Glas-Karten, haptische Bewegungen). Gilt für die Seite, Bertan,
+  Kyrill und Cas; nur die Fusszeile wechselt.
 
 - **Logo:** `assets/logo-digitalonly.png` (Original aus dem digitalONLY-Design, schwarz, transparenter Hintergrund). Auf jedem Bild und jeder Karussell-Folie verwenden, nie nachsetzen.
 - **Farben:** Schwarz #111 auf Hellgrau #f2f1ed / Weiss, Akzent nur Schwarz (wie die Anleitung). **[bitte prüfen]**

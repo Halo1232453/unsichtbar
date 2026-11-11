@@ -54,6 +54,7 @@ Wähle den Modus nach der Anfrage und lies dann **nur** die passende Datei in `m
 | /li-inbox | `modi/li-inbox.md` | Triage: Lead, Recruiter, Kollege, Bitte, Spam. |
 | /li-audit | `modi/li-audit.md` | Was schon gepostet wurde, geordnet nach dem, was wirklich wirkte. |
 | /li-woche | `modi/li-woche.md` | Autopilot: Plan plus alle Beiträge der Woche in einem Durchgang. |
+| /li-visual | `modi/li-visual.md` | Bild und Video im Premium-Stil zu einem Beitrag, in der Zentrale angehängt. |
 
 Ist unklar, welcher Modus gemeint ist, nimm /li-post für «schreib etwas» und
 /li-plan für «was soll ich posten».

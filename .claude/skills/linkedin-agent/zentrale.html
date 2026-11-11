@@ -391,7 +391,7 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
     var cmds = [
       ["/li-post", "Eine Idee wird ein Beitrag für die Unternehmensseite. Mit «für Bertan», «für Kyrill» oder «für Cas» für das persönliche Profil."],
       ["/li-woche", "Plan und alle Beiträge der nächsten Woche in einem Durchgang."],
-      ["Bild dazu", "Im Chat «passendes Bild» schreiben. Das Bild hängt danach am Beitrag."],
+      ["/li-visual", "Bild und Video im Premium-Stil zu einem Beitrag. Auftrag unter «Details» kopieren. Hängt danach am Beitrag."],
       ["Video", "Sprachmemo (Sprachmemos-App, nicht WhatsApp) im Chat hochladen. Daraus entsteht ein Video mit Untertiteln."],
       ["/li-comment", "Kommentar unter einem fremden Beitrag. Beitrag einfügen."],
       ["/li-reply", "Antworten auf Kommentare unter einem eigenen Beitrag."],
@@ -441,6 +441,11 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
     h += '</div>';
     if (p.erster_kommentar) h += '<div class="panel"><span class="label">Erster Kommentar, direkt nach dem Posten</span><div class="feed">' + marked(p.erster_kommentar) + '</div><div class="actions"><button class="btn small" data-act="copy-c" data-id="' + esc(p.id) + '">Kommentar kopieren</button></div></div>';
     if (p.notiz) h += '<div class="panel"><span class="label">Notiz vom Agenten</span><div>' + esc(p.notiz) + '</div></div>';
+    var hasVis = p.visual === "premium";
+    h += '<div class="panel"><span class="label">Bild & Video im Premium-Stil</span><div>' + (hasVis
+      ? 'Vorhanden: Video mit haptischen Bewegungen und Standbild im dunklen digitalONLY-Stil (4:5). Für eine neue Fassung den Auftrag kopieren und im Chat einfügen.'
+      : 'Noch nicht erstellt. Auftrag kopieren und im Chat einfügen. Claude erstellt Video und Standbild passend zum Text und hängt beides hier an.') + '</div>' +
+      '<div class="actions"><button class="btn small primary" data-act="visual" data-id="' + esc(p.id) + '">' + (hasVis ? "Neue Fassung beauftragen" : "Auftrag kopieren") + '</button></div></div>';
     if (canWrite && db) {
       h += '<div class="panel"><span class="label">Status</span><div class="actions">' + statusSeg(p) + '<span class="spacer"></span>';
       if (S.confirm === "drop:" + p.id) h += '<button class="btn small danger" data-act="drop-yes" data-id="' + esc(p.id) + '">Wirklich verwerfen</button><button class="btn small ghost" data-act="no">Nein</button>';
@@ -501,6 +506,7 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
     if (act === "stimme-edit") { S.stimmeDraft = S.stimme && S.stimme.text ? S.stimme.text : ""; render(); return; }
     if (act === "stimme-cancel") { S.stimmeDraft = null; render(); return; }
     if (act === "dl" && p) { saveMedia(p, i, b); return; }
+    if (act === "visual" && p) { copy("/li-visual " + p.id + " · Bild und Video im Premium-Stil für «" + (p.titel || "Beitrag") + "» (" + (KONTO[p.konto || "seite"] || "Seite") + ") erstellen und in der Zentrale anhängen.", "Auftrag kopiert. Im Chat mit Claude einfügen."); return; }
     if (!db) return;
     if (act === "save" && p) { b.disabled = true; upd(id, { text: S.editing ? S.editing.draft : p.text, bearbeitet: true }, "Gespeichert.").then(function () { S.editing = null; render(); }); return; }
     if (act === "status" && p) { var st = b.dataset.st; if ((p.status || "entwurf") === st) return; upd(id, { status: st }, st === "gepostet" ? "Als gepostet markiert." : st === "geplant" ? "Als geplant markiert." : "Status: Entwurf."); return; }
