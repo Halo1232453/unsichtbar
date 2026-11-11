@@ -74,6 +74,8 @@ entstehen die guten Beiträge. **[alle bitte prüfen, nur Bestätigtes bleibt]**
    eine neue Website.
 2. Bewertungen sind kein Glück, sondern ein Ablauf. Wer nicht fragt, bekommt
    keine.
+   **Hinweis:** Bewertungs-Aufrufe gelten als Graubereich und werden nicht
+   gepostet, bis das geklärt ist.
 3. Teure Verzeichnis- und Branchenbuch-Abos lohnen sich für viele KMU nicht mehr,
    wenn das Google-Profil sauber gepflegt ist.
 4. Wer in ChatGPT und Gemini nicht vorkommt, verliert Anfragen, ohne es zu merken.
