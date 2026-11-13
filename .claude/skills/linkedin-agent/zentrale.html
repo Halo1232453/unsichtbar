@@ -443,7 +443,7 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
     h += '</div>';
     if (p.erster_kommentar) h += '<div class="panel"><span class="label">Erster Kommentar, direkt nach dem Posten</span><div class="feed">' + marked(p.erster_kommentar) + '</div><div class="actions"><button class="btn small" data-act="copy-c" data-id="' + esc(p.id) + '">Kommentar kopieren</button></div></div>';
     if (p.notiz) h += '<div class="panel"><span class="label">Notiz vom Agenten</span><div>' + esc(p.notiz) + '</div></div>';
-    var hasVis = p.visual === "premium";
+    var hasVis = p.visual === "premium" || p.visual === "digitalonly";
     h += '<div class="panel"><span class="label">Bild & Video im Premium-Stil</span><div>' + (hasVis
       ? 'Vorhanden: Video mit haptischen Bewegungen und Standbild im dunklen digitalONLY-Stil (4:5). Für eine neue Fassung den Auftrag kopieren und im Chat einfügen.'
       : 'Noch nicht erstellt. Auftrag kopieren und im Chat einfügen. Claude erstellt Video und Standbild passend zum Text und hängt beides hier an.') + '</div>' +

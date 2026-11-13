@@ -6,6 +6,20 @@ der Zentrale: `/li-visual <post-id>` (Auftrag unter «Details» kopieren).
 
 ## Der Stil
 
+**Standard ab 13.11.2026: digitalONLY-Editorial** (`theme="theme-do"`, Vorlage
+`linkedin-visuals/scenes_workspace_do.py`). Papierweiss, tiefes Schwarz, eine
+Signalfarbe Rot. Logo schwarz, schwarze Kachel «LIVE · Datum» oben rechts, dicke
+schwarze Linie wie in der digitalONLY-Anleitung, Eyebrow in Mono mit «//»,
+Überschrift in Jost 800, schwarze Terminal-Blöcke mit rotem Schlagschatten,
+weisse Karten mit hartem schwarzem Schatten, ■-Kacheln in Mono. Hooks: rote,
+nummerierte Beacons mit Puls-Ringen (`bcn()`), ein Pixel-Cursor, der durchs
+Bild fährt und klickt (Klick-Welle, Einfedern), Tipp-Text im Terminal, unten
+ein schwarzes Band mit roter Schaltfläche. Fusszeile in Mono, Grossbuchstaben.
+
+Alternative: der dunkle Premium-Stil unten (für Motive mit Handy und Lichtschein).
+
+### Dunkler Premium-Stil
+
 - **Format:** 4:5, 1080 × 1350. Standbild als PNG in doppelter Auflösung,
   Video als MP4, 30 fps, 10 bis 13 Sekunden, ohne Ton (Feed spielt stumm).
 - **Fläche:** fast Schwarz mit Lichtschein. Drei Themen: `theme-red`
