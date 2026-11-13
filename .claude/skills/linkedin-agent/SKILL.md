@@ -108,6 +108,7 @@ Zentrale: https://claude.ai/artifact/MVPo6B1gjorqGyErm589pg (private Seite in Cl
   `"bertan"` für Bertan Findik, `"kyrill"` für Kyrill Elsensohn, `"cas"` für
   Cas; ohne Angabe gilt `"seite"`) und `medien`: Liste von
   `{"id": "<Asset-ID>", "typ": "bild"|"video", "name": "<Dateiname>"}`.
+- **Dringend posten.** Feld `prio: "posten"` setzt in der Zentrale die rote Markierung «Jetzt posten» und stellt den Beitrag zuoberst ins Raster.
 - **Bilder und Videos anhängen.** Jedes Bild oder Video zu einem Beitrag mit
   dem Artifact-Werkzeug (`asset: true`, `url` = Zentrale) hochladen und die
   zurückgegebene `id` per `ArtifactData` `update` (mit `if_version`) in

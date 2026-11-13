@@ -89,6 +89,7 @@ nav.tabs a:hover:not([aria-current]) { border-color: var(--ink); }
 .chip.s-geplant { border-color: var(--acc); color: var(--acc); }
 .chip.s-gepostet { border-color: var(--pass); color: var(--pass); }
 .chip.s-verworfen { border-color: var(--muted); color: var(--muted); }
+.chip.prio { background: var(--acc); border-color: var(--acc); color: var(--on-acc); }
 .card h3 { margin: 0; font-weight: 800; font-size: 20px; line-height: 1.15; text-wrap: balance; }
 .hook { font: 400 12px var(--mono); color: var(--muted); }
 .feed { font: 15px/1.45 var(--feed); white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; }
@@ -259,7 +260,8 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
     return '<div class="row"><span class="when">' + esc(d ? DAYS[d.getDay()].toUpperCase() + " " + fmtShort(d) : (p.datum || "ohne Datum")) + (p.zeit ? " · " + esc(p.zeit) : "") + '</span>' +
       '<span class="chip k-' + esc(k) + '">' + esc(KONTO[k] || k) + '</span>' +
       (p.typ ? '<span class="chip">' + esc(p.typ) + '</span>' : '') +
-      '<span class="chip s-' + esc(st) + '">' + esc(st) + '</span></div>';
+      '<span class="chip s-' + esc(st) + '">' + esc(st) + '</span>' +
+      (p.prio === "posten" && st !== "gepostet" ? '<span class="chip prio">Jetzt posten</span>' : '') + '</div>';
   }
 
   function metaRow(p) {
@@ -300,7 +302,7 @@ textarea.tall { min-height: 60vh; font: 13px/1.5 var(--mono); }
       if (S.fS === "offen") return st !== "gepostet";
       if (S.fS !== "alle" && st !== S.fS) return false;
       return true;
-    }).sort(sortPosts);
+    }).sort(function (a, b) { var pa = a.prio === "posten" && a.status !== "gepostet", pb = b.prio === "posten" && b.status !== "gepostet"; return (pb - pa) || sortPosts(a, b); });
     var open = all.filter(function (p) { return (p.status || "entwurf") === "entwurf"; }).length;
     var phN = all.filter(function (p) { return placeholders(p.text).length; }).length;
     var mN = all.reduce(function (n, p) { return n + medien(p).length; }, 0);
