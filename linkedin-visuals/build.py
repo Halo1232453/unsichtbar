@@ -3,6 +3,7 @@ import json, os, sys
 here = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, here)
 from scenes import SCENES
 import scenes_kw46  # noqa: F401  (registriert weitere Motive)
+import scenes_workspace  # noqa: F401
 eng = open(os.path.join(here, "engine.html")).read()
 os.makedirs(os.path.join(here, "build"), exist_ok=True)
 meta = {}
