@@ -1,0 +1,201 @@
+{
+ "version": "de-CH 1.0",
+ "note": "21 Hook-Formeln. Zeile 1 ist das ganze Spiel: der Feed schneidet auf dem Handy nach etwa 140 Zeichen ab (Desktop rund 210), bevor «mehr anzeigen» kommt. Der Hook muss allein überleben. Jede Formel hat eine Vorlage, ein ausgefülltes Beispiel, wofür sie taugt und woran sie meistens scheitert. WICHTIG: Alle Beispiele sind erfundene Illustrationen der Form. Sie sind keine Fakten über digitalONLY AG und dürfen nie als solche in einen Beitrag übernommen werden. Beispiele mit «wir» oder «ich» sprechen aus Sicht eines erfundenen Kunden (Praxis, Coiffeur), nicht aus Sicht von digitalONLY.",
+ "rules": [
+  "Eine Idee pro Hook. Braucht er ein Komma, um zwei Gedanken zu verbinden, sind es zwei Beiträge.",
+  "Zeile 2 ist die Auflösung von Zeile 1, nie die Vorbereitung für Zeile 3.",
+  "Zahlen schlagen Adjektive. Immer.",
+  "Funktioniert der Hook auch mit dem Namen einer anderen Agentur darunter, ist es nicht euer Hook."
+ ],
+ "hooks": [
+  {
+   "id": 1,
+   "name": "Gegenthese",
+   "original": "Contrarian Take",
+   "template": "Alle sagen {verbreiteter Rat}. Nach {konkreter Erfahrung} halte ich das für falsch.",
+   "example": "Alle sagen, eine neue Website bringt mehr Patienten. Bei den meisten Praxen bringt das Google-Profil mehr als die Website.",
+   "best_for": "Einen Standpunkt setzen. Höchste Kommentarrate aller Formeln.",
+   "trap": "Gegen etwas sein, das niemand glaubt. Die Meinung muss wirklich verbreitet sein."
+  },
+  {
+   "id": 2,
+   "name": "Zahlen-Enthüllung",
+   "original": "Number Reveal",
+   "template": "Wir haben {Sache} {N} {Tage/Wochen} lang gemacht. Das ist passiert.",
+   "example": "Wir haben {N} Tage lang jede Google-Bewertung innert 24 Stunden beantwortet. Das hat sich verändert:",
+   "best_for": "Experimente, Tests, alles mit zählbarem Ergebnis.",
+   "trap": "Die Zahl verstecken. Sie gehört in Zeile 1, sonst bringt die Formel nichts."
+  },
+  {
+   "id": 3,
+   "name": "Fehler-Geständnis",
+   "original": "Mistake Confession",
+   "template": "{Betrag/Zeit} hat mich {Fehler} gekostet.",
+   "example": "{N} Monate Google Ads mit dem falschen Standort-Radius. So viel Budget ging an Leute, die nie kommen konnten.",
+   "best_for": "Vertrauen. Leute folgen denen, die zeigen, wo sie danebenlagen.",
+   "trap": "Einen Fake-Fehler gestehen. «Wir sind halt zu perfektionistisch» liest sich als Angeberei und tötet den Beitrag."
+  },
+  {
+   "id": 4,
+   "name": "Vorher / Nachher",
+   "original": "Before / After",
+   "template": "Vor {Zeitraum}: {schmerzhafter Zustand}. Heute: {besserer Zustand}.",
+   "example": "Vor {Zeitraum} kamen Neupatienten fast nur über Empfehlungen. Heute sagt jeder zweite am Telefon: «Ich hab Sie auf Google gefunden.»",
+   "best_for": "Wandel zeigen, den die Leserin auch will.",
+   "trap": "Ein Nachher ohne Mechanismus. Wer nicht sagt, was sich geändert hat, prahlt nur."
+  },
+  {
+   "id": 5,
+   "name": "Listen-Versprechen",
+   "original": "The List Promise",
+   "template": "{N} Dinge, die ich gern gewusst hätte, bevor {Ereignis}.",
+   "example": "5 Dinge, die jede Arztpraxis im Google-Profil eintragen sollte, bevor sie Geld für Werbung ausgibt.",
+   "best_for": "Speicherbare Beiträge. Hohe Speicher-Rate.",
+   "trap": "Eine Zahl über 10. Ab 11 Punkten ist es ein Blogartikel, kein Beitrag."
+  },
+  {
+   "id": 6,
+   "name": "Insider-Wissen",
+   "original": "Insider Secret",
+   "template": "Nach {N} Jahren in {Bereich} ist das der Teil, den niemand {erzählt}.",
+   "example": "Ich war selbst im Aussendienst für Online-Verzeichnisse. Das hier sagt Ihnen im Verkaufsgespräch niemand.",
+   "best_for": "Autorität aus echter Branchenerfahrung.",
+   "trap": "Ein «Geheimnis», das in jedem Ratgeber steht. Es muss wirklich Insider-Wissen sein."
+  },
+  {
+   "id": 7,
+   "name": "Direkte Ansage",
+   "original": "The Callout",
+   "template": "Wenn Sie noch {verbreitete Gewohnheit}, hören Sie auf.",
+   "example": "Wenn Ihre Praxis bei Google noch die Öffnungszeiten von 2022 zeigt, hören Sie auf, über Werbung nachzudenken.",
+   "best_for": "Aufmerksamkeit bei einer klar umrissenen Gruppe.",
+   "trap": "Die Leserin beleidigen statt sie aufzuwecken. Es geht um die Gewohnheit, nicht um die Person."
+  },
+  {
+   "id": 8,
+   "name": "Fragen-Falle",
+   "original": "Question Trap",
+   "template": "{Konkretes Dilemma}. Was machen Sie?",
+   "example": "Ein Patient schreibt eine 1-Stern-Bewertung, war aber nachweislich nie in Ihrer Praxis. Was machen Sie?",
+   "best_for": "Kommentare. Die Leute wollen ihre Antwort zeigen.",
+   "trap": "Eine Frage mit offensichtlicher Antwort. Es muss echt zwei vernünftige Wege geben."
+  },
+  {
+   "id": 9,
+   "name": "Szenen-Einstieg",
+   "original": "Story Cold Open",
+   "template": "\"{ein Satz Dialog}\"",
+   "example": "\"Wir sind schon auf Google. Das reicht.\"",
+   "best_for": "Geschichten. Dialog zieht in die Szene, bevor jemand entscheidet, ob er weiterliest.",
+   "trap": "Ein langweiliger Satz. Der Dialog muss Spannung oder Konflikt tragen."
+  },
+  {
+   "id": 10,
+   "name": "Der Beleg",
+   "original": "The Receipt",
+   "template": "{Ergebnis} in {Zeitraum}. Das ist der genaue Ablauf.",
+   "example": "{Anzahl} neue Bewertungen in {Zeitraum}, ohne einen Franken Werbung. So lief es genau ab.",
+   "best_for": "Beweis plus Anleitung. Wird gespeichert und weitergeleitet.",
+   "trap": "Ein Ergebnis ohne den Ablauf. Dann ist es Angeberei, kein Beleg."
+  },
+  {
+   "id": 11,
+   "name": "Mythos-Bruch",
+   "original": "Myth Bust",
+   "template": "{Verbreitete Annahme} ist nicht der Grund, warum {Problem}.",
+   "example": "Nicht der Algorithmus ist schuld, wenn Ihre Praxis auf Google Maps nicht auftaucht.",
+   "best_for": "Expertise zeigen, indem man einen verbreiteten Irrtum auflöst.",
+   "trap": "Den Mythos brechen, ohne die echte Ursache zu nennen."
+  },
+  {
+   "id": 12,
+   "name": "Der Vergleich",
+   "original": "The Comparison",
+   "template": "{Teure Variante} gegen {günstige Variante}. {Überraschender Gewinner}.",
+   "example": "Ein Verzeichnis-Eintrag für mehrere hundert Franken im Jahr gegen ein gut gepflegtes Google-Profil, das nichts kostet. Ratet mal, wo die Anrufe herkommen.",
+   "best_for": "Entscheidungen, vor denen die Zielgruppe gerade steht.",
+   "trap": "Einen Strohmann vergleichen. Beide Seiten müssen ernsthafte Optionen sein. Keine Mitbewerber namentlich angreifen."
+  },
+  {
+   "id": 13,
+   "name": "Erlaubnis",
+   "original": "Permission Slip",
+   "template": "Sie dürfen {etwas, das sich verboten anfühlt}.",
+   "example": "Sie dürfen auf eine unfaire Google-Bewertung öffentlich und klar antworten.",
+   "best_for": "Emotionale Resonanz. Wird geteilt, weil es entlastet.",
+   "trap": "Erlaubnis für etwas, das sowieso alle tun."
+  },
+  {
+   "id": 14,
+   "name": "Musterbruch",
+   "original": "Pattern Interrupt",
+   "template": "{Kurze, überraschende Aussage}.",
+   "example": "Unsere Praxis hat die Online-Terminbuchung wieder abgeschaltet.",
+   "best_for": "Aufhören lassen im Scroll. Funktioniert, weil es kurz ist.",
+   "trap": "Clickbait ohne Auflösung. Zeile 2 muss sofort liefern."
+  },
+  {
+   "id": 15,
+   "name": "Die Warnung",
+   "original": "The Warning",
+   "template": "Ihr {harmlos wirkendes Ding} kostet Sie {Kosten}.",
+   "example": "Ihr Google-Profil ohne Feiertags-Öffnungszeiten kostet Sie jedes Jahr die Kunden, die am 2. Januar vor verschlossener Tür stehen.",
+   "best_for": "Versteckte Kosten sichtbar machen.",
+   "trap": "Angstmacherei ohne Ausweg. Die Lösung muss im Beitrag stehen."
+  },
+  {
+   "id": 16,
+   "name": "Gut gegen sehr gut",
+   "original": "Good vs Great",
+   "template": "Gute {Rolle} {tun X}. Sehr gute {tun Y}.",
+   "example": "Gute Praxen antworten auf schlechte Bewertungen. Sehr gute antworten auch auf die guten.",
+   "best_for": "Haltung zeigen. Leute ordnen sich gern dem «sehr gut» zu.",
+   "trap": "Ein Unterschied, der keiner ist. Y muss wirklich schwerer sein als X."
+  },
+  {
+   "id": 17,
+   "name": "Zeit-Anker",
+   "original": "Time Anchor",
+   "template": "{Aufgabe} hat früher {lange Zeit} gedauert. Heute {kurze Zeit}.",
+   "example": "Ein Google-Profil sauber einrichten hat uns früher einen halben Tag gekostet. Heute {deine Zeit}.",
+   "best_for": "Effizienz greifbar machen.",
+   "trap": "Unglaubwürdige Verhältnisse. «Von 5 Stunden auf 5 Sekunden» glaubt niemand."
+  },
+  {
+   "id": 18,
+   "name": "Die unpopuläre Regel",
+   "original": "The Unpopular Rule",
+   "template": "Wir {machen etwas Ungewöhnliches}. Nie.",
+   "example": "Wir vergeben in der Praxis keine Erstkonsultationen per E-Mail. Nie.",
+   "best_for": "Positionierung durch Abgrenzung.",
+   "trap": "Eine Regel, die ihr nicht wirklich lebt. Nur schreiben, was stimmt."
+  },
+  {
+   "id": 19,
+   "name": "Neugier-Lücke",
+   "original": "Curiosity Gap",
+   "template": "{Widerspruch, der eine Erklärung verlangt}.",
+   "example": "Die Apotheke mit den meisten Bewertungen im Quartier hat die schlechteste Website.",
+   "best_for": "Lesezeit. Die Leute lesen bis zum Ende, um die Lücke zu schliessen.",
+   "trap": "Die Lücke nie schliessen. Dann fühlen sich die Leute verschaukelt."
+  },
+  {
+   "id": 20,
+   "name": "Der Rückzug",
+   "original": "The Walk-Away",
+   "template": "Wir haben {Mutiges} gemacht. {Überraschende Folge}.",
+   "example": "Ein Coiffeur hat sein teuerstes Werbe-Abo gekündigt. Die Anrufe sind seither nicht weniger geworden.",
+   "best_for": "Überzeugung zeigen. Riskante Entscheidungen erzeugen Respekt.",
+   "trap": "Eine Folge, die zu gut klingt. Ehrlich bleiben, auch über Nachteile."
+  },
+  {
+   "id": 21,
+   "name": "Direkter Nutzen",
+   "original": "The Direct Value",
+   "template": "Hier ist {konkretes Werkzeug/Vorlage}, das {Ergebnis} gebracht hat. Nehmen Sie es.",
+   "example": "Das ist der Satz, mit dem wir Stammkunden um eine Google-Bewertung bitten. Nehmen Sie ihn.",
+   "best_for": "Grosszügigkeit. Höchste Speicher- und Teilrate.",
+   "trap": "Etwas Halbes geben und den Rest hinter einer DM verstecken."
+  }
+ ]
+}

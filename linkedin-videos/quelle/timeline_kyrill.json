@@ -1,0 +1,155 @@
+{
+ "total": 48.8,
+ "segs": [
+  {
+   "id": "hook",
+   "start": 0.15,
+   "end": 2.11,
+   "dur": 1.96,
+   "cap": "Eine unbequeme Frage an alle KMU mit Verzeichnis-Abo."
+  },
+  {
+   "id": "frage",
+   "start": 2.87,
+   "end": 7.11,
+   "dur": 4.24,
+   "cap": "Wie viele Anrufe hat Ihnen Ihr Abo letztes Jahr gebracht?"
+  },
+  {
+   "id": "stand",
+   "start": 7.11,
+   "end": 11.85,
+   "dur": 4.74,
+   "cap": "Wissen Sie's nicht aus dem Stand? Dann liegt genau da das Problem."
+  },
+  {
+   "id": "saetze",
+   "start": 11.9,
+   "end": 21.04,
+   "dur": 9.14,
+   "cap": ""
+  },
+  {
+   "id": "keiner",
+   "start": 21.38,
+   "end": 24.66,
+   "dur": 3.28,
+   "cap": "Keiner dieser Sätze sagt, ob es sich für Sie lohnt."
+  },
+  {
+   "id": "rechnung",
+   "start": 25.02,
+   "end": 29.08,
+   "dur": 4.06,
+   "cap": "Nehmen Sie die Rechnung hervor. Fragen Sie nach Aufrufen, Klicks und Anrufen."
+  },
+  {
+   "id": "profil",
+   "start": 29.35,
+   "end": 36.05,
+   "dur": 6.7,
+   "cap": "Und legen Sie das neben Ihr Google-Profil. Das kostet nichts. Und Sie sehen Monat für Monat, wer anruft."
+  },
+  {
+   "id": "blind",
+   "start": 36.55,
+   "end": 40.96,
+   "dur": 4.41,
+   "cap": "Vielleicht lohnt sich Ihr Abo. Nur blind zahlen, das sollten Sie nicht mehr."
+  },
+  {
+   "id": "cta",
+   "start": 41.84,
+   "end": 46.91,
+   "dur": 5.07,
+   "cap": "Wann haben Sie Ihr Abo zum letzten Mal hinterfragt? Schreiben Sie's in die Kommentare."
+  }
+ ],
+ "capsegs": [
+  {
+   "cap": "Eine unbequeme Frage an alle KMU mit Verzeichnis-Abo.",
+   "start": 0.15,
+   "end": 2.11,
+   "dur": 1.96
+  },
+  {
+   "cap": "Wie viele Anrufe hat Ihnen Ihr Abo letztes Jahr gebracht?",
+   "start": 2.87,
+   "end": 7.11,
+   "dur": 4.24
+  },
+  {
+   "cap": "Wissen Sie's nicht aus dem Stand? Dann liegt genau da das Problem.",
+   "start": 7.11,
+   "end": 11.85,
+   "dur": 4.74
+  },
+  {
+   "cap": "Typische Verkaufssätze kennen Sie bestimmt.",
+   "start": 11.9,
+   "end": 14.3,
+   "dur": 2.4
+  },
+  {
+   "cap": "«Ihre Konkurrenz ist schon dabei.»",
+   "start": 14.45,
+   "end": 16.3,
+   "dur": 1.85
+  },
+  {
+   "cap": "«Ohne Eintrag findet Sie niemand.»",
+   "start": 16.4,
+   "end": 18.35,
+   "dur": 1.95
+  },
+  {
+   "cap": "«Das Angebot gilt nur bis Ende Monat.»",
+   "start": 18.5,
+   "end": 21.04,
+   "dur": 2.54
+  },
+  {
+   "cap": "Keiner dieser Sätze sagt, ob es sich für Sie lohnt.",
+   "start": 21.38,
+   "end": 24.66,
+   "dur": 3.28
+  },
+  {
+   "cap": "Nehmen Sie die Rechnung hervor. Fragen Sie nach Aufrufen, Klicks und Anrufen.",
+   "start": 25.02,
+   "end": 29.08,
+   "dur": 4.06
+  },
+  {
+   "cap": "Und legen Sie das neben Ihr Google-Profil. Das kostet nichts. Und Sie sehen Monat für Monat, wer anruft.",
+   "start": 29.35,
+   "end": 36.05,
+   "dur": 6.7
+  },
+  {
+   "cap": "Vielleicht lohnt sich Ihr Abo. Nur blind zahlen, das sollten Sie nicht mehr.",
+   "start": 36.55,
+   "end": 40.96,
+   "dur": 4.41
+  },
+  {
+   "cap": "Wann haben Sie Ihr Abo zum letzten Mal hinterfragt? Schreiben Sie's in die Kommentare.",
+   "start": 41.84,
+   "end": 46.91,
+   "dur": 5.07
+  }
+ ],
+ "ev": {
+  "stamp": 11.4,
+  "q1": 14.45,
+  "q2": 16.4,
+  "q3": 18.5,
+  "ra": 27.55,
+  "rk": 28.15,
+  "rn": 28.65,
+  "chf": 32.15,
+  "monat": 33.75,
+  "nurblind": 38.36,
+  "btn": 45.14
+ }
+}

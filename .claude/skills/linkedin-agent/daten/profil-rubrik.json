@@ -1,0 +1,32 @@
+{
+  "version": "de-CH 1.0",
+  "total": 100,
+  "gilt_fuer": "Persönliches LinkedIn-Profil (z.B. Bertan Findik als Partner von digitalONLY AG)",
+  "note": "Zwölf Punkte. Ehrlich bewerten, eine grosszügige Note hilft niemandem. Die meisten Profile landen beim ersten Durchgang zwischen 30 und 49.",
+  "items": [
+    {"id": "headline", "name": "Headline (Slogan unter dem Namen)", "points": 12,
+     "full_marks": "Sagt, wem man hilft und was sich für sie ändert, enthält einen Beleg und ist nicht bloss der Jobtitel. Nutzt die 220 Zeichen, nicht 60."},
+    {"id": "about_open", "name": "Info, die ersten zwei Zeilen", "points": 10,
+     "full_marks": "Die ersten zwei Zeilen (alles vor «mehr anzeigen») nennen das Problem der Leserin. Kein «leidenschaftlich», keine Biografie in der dritten Person, kein Einstieg mit dem eigenen Namen."},
+    {"id": "about_body", "name": "Info, der Rest", "points": 10,
+     "full_marks": "An eine Person geschrieben: ihr Problem, was man tut, eine Zahl als Beleg, was als Nächstes zu tun ist. Unter 1400 Zeichen."},
+    {"id": "featured", "name": "Im Fokus (Featured)", "points": 8,
+     "full_marks": "Drei Elemente: bester Beitrag, ein Beleg (Fallbeispiel, Referenz) und der Weg zur Kontaktaufnahme. Nichts Leeres, nichts Veraltetes."},
+    {"id": "banner", "name": "Titelbild", "points": 6,
+     "full_marks": "Eine Zeile Positionierung und ein Kontaktweg. Nicht der blaue Standard-Verlauf, keine Stock-Skyline."},
+    {"id": "photo", "name": "Profilfoto", "points": 6,
+     "full_marks": "Gesicht füllt etwa 60 % des Bildes, Augen sichtbar, nicht älter als zwei Jahre, ruhiger Hintergrund."},
+    {"id": "current_role", "name": "Aktuelle Position", "points": 10,
+     "full_marks": "Eine Zeile Umfang, dann zwei bis drei Ergebnisse mit Zahlen. Aufgaben sind keine Ergebnisse. Verknüpft mit der Unternehmensseite."},
+    {"id": "experience_depth", "name": "Berufserfahrung", "points": 8,
+     "full_marks": "Die letzten zwei Stellen ausführlich, alles über zehn Jahre auf je eine Zeile gekürzt."},
+    {"id": "skills", "name": "Kenntnisse, Top 3", "points": 6,
+     "full_marks": "Die Top 3 sind die drei, für die man gebucht werden will, und sind bestätigt. Die anderen 47 sind Rauschen."},
+    {"id": "recommendations", "name": "Empfehlungen", "points": 8,
+     "full_marks": "Mindestens drei aus den letzten zwei Jahren, jede nennt ein konkretes Ergebnis statt Charakter."},
+    {"id": "activity", "name": "Aktivität letzte 7 Tage", "points": 10,
+     "full_marks": "In den letzten sieben Tagen gepostet oder kommentiert. Ein leerer Aktivitäts-Feed wirkt wie ein verlassenes Profil."},
+    {"id": "contact", "name": "Kontakt und eigene URL", "points": 6,
+     "full_marks": "Eigene Profil-URL, funktionierende E-Mail oder Buchungslink in den Kontaktinfos, gleicher Name wie auf anderen Plattformen."}
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "version": "de-CH 1.0",
+  "total": 100,
+  "gilt_fuer": "LinkedIn-Unternehmensseite (z.B. linkedin.com/company/digitalonly-ag)",
+  "note": "Zwölf Punkte für eine Unternehmensseite. Gleiche Logik wie beim Profil: Eine Seite wird in vier Sekunden beurteilt, über Logo, Slogan und die ersten Zeilen der Info. Ehrlich bewerten. Eine neue Seite landet fast immer unter 40, das ist normal und kein Drama.",
+  "items": [
+    {"id": "slogan", "name": "Slogan (Tagline unter dem Namen)", "points": 12,
+     "full_marks": "Sagt, für wen ihr arbeitet und was sich ändert, in Worten der Kundschaft. Nicht «Ihre Digitalagentur», nicht «Innovative Lösungen». Ein konkreter Begriff, nach dem jemand sucht (z.B. Google Maps, Arztpraxen, Schweiz)."},
+    {"id": "activity", "name": "Aktivität letzte 7 Tage", "points": 12,
+     "full_marks": "Mindestens ein Beitrag in den letzten sieben Tagen. Eine Seite ohne aktuelle Beiträge wirkt geschlossen."},
+    {"id": "about_open", "name": "Übersicht, die ersten zwei Zeilen", "points": 10,
+     "full_marks": "Die ersten zwei Zeilen nennen das Problem der Kundschaft und euer Ergebnis. Nicht «digitalONLY AG wurde gegründet ...», nicht «Wir sind ein junges, dynamisches Team»."},
+    {"id": "follower_base", "name": "Follower-Basis", "points": 10,
+     "full_marks": "Die Seite hat die eigenen Netzwerke der Mitarbeitenden ausgeschöpft (Einladungen an passende Kontakte), Kundschaft und Partner folgen. Unter 100 Follower: 0-3 Punkte, 100-300: 4-7, über 300 und wachsend: 8-10."},
+    {"id": "about_body", "name": "Übersicht, der Rest", "points": 8,
+     "full_marks": "Leistungen konkret (Google Maps SEO, Google Ads, Sichtbarkeit in KI-Suchen), Region, für wen, ein Beleg mit Zahl, was als Nächstes zu tun ist. Unter 1500 Zeichen."},
+    {"id": "logo", "name": "Logo", "points": 8,
+     "full_marks": "Quadratisch, scharf, auch als kleiner Kreis im Feed lesbar. Kein abgeschnittener Schriftzug."},
+    {"id": "employees", "name": "Verknüpfte Mitarbeitende", "points": 8,
+     "full_marks": "Alle im Team haben digitalONLY AG als aktuelle Position mit Link auf die Seite (Logo erscheint im Profil). Die Partner teilen und kommentieren Seitenbeiträge."},
+    {"id": "cta_button", "name": "Aktions-Button", "points": 8,
+     "full_marks": "Der Button oben auf der Seite führt zu einem echten nächsten Schritt (Kontakt, Termin, Website-Unterseite), nicht bloss zur Startseite."},
+    {"id": "banner", "name": "Titelbild", "points": 6,
+     "full_marks": "Eine Zeile Positionierung und ein Kontaktweg (Website oder Telefon). Nicht leer, kein Stockfoto."},
+    {"id": "details", "name": "Stammdaten", "points": 6,
+     "full_marks": "Branche, Grösse, Hauptsitz (Zug), Website, Gründungsjahr und Spezialgebiete vollständig und korrekt."},
+    {"id": "pinned", "name": "Angehefteter Beitrag", "points": 6,
+     "full_marks": "Oben angeheftet ist der Beitrag, der am besten erklärt, was ihr tut, oder der stärkste Beleg. Kein veralteter Beitrag."},
+    {"id": "consistency", "name": "Einheitlicher Auftritt", "points": 6,
+     "full_marks": "Gleiche Positionierung, Farben und Formulierungen wie Website und Google-Profil von digitalONLY. Wer von der Seite auf die Website klickt, erkennt sofort dasselbe Unternehmen."}
+  ]
+}

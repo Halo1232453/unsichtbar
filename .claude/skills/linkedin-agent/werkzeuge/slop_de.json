@@ -1,0 +1,902 @@
+{
+ "version": "de-CH 1.0",
+ "note": "Lexikon für humanize.py und detect.py, deutsche Fassung für Schweizer LinkedIn-Texte. Ersetzt werden nur Wörter und Wendungen, bei denen der Satz grammatikalisch intakt bleibt (gleiches Genus, gleiche Wortart). Alles, was die Satzstellung ändern würde, steht unter 'structures' und wird nur markiert. 'flex': true heisst, dass auch gebeugte Formen getroffen werden (nahtlos, nahtlose, nahtlosen ...) und die Endung erhalten bleibt. Benutzt du ein Wort wirklich, lösch die Zeile. Das Lexikon gehört dir. 'orte' und 'marken' zählt detect.py als konkrete Namen (im Deutschen sind alle Nomen gross, darum keine automatische Namenserkennung). Eigene Orte, Kunden-Branchen-Namen und Produkte hier ergänzen.",
+ "invisible": [
+  {
+   "cp": "U+200B",
+   "name": "ZERO WIDTH SPACE",
+   "action": "delete"
+  },
+  {
+   "cp": "U+200C",
+   "name": "ZERO WIDTH NON-JOINER",
+   "action": "delete"
+  },
+  {
+   "cp": "U+200D",
+   "name": "ZERO WIDTH JOINER",
+   "action": "delete"
+  },
+  {
+   "cp": "U+2060",
+   "name": "WORD JOINER",
+   "action": "delete"
+  },
+  {
+   "cp": "U+FEFF",
+   "name": "ZERO WIDTH NO-BREAK SPACE / BOM",
+   "action": "delete"
+  },
+  {
+   "cp": "U+00AD",
+   "name": "SOFT HYPHEN (bedingter Trennstrich)",
+   "action": "delete"
+  },
+  {
+   "cp": "U+180E",
+   "name": "MONGOLIAN VOWEL SEPARATOR",
+   "action": "delete"
+  },
+  {
+   "cp": "U+061C",
+   "name": "ARABIC LETTER MARK",
+   "action": "delete"
+  },
+  {
+   "cp": "U+200E",
+   "name": "LEFT-TO-RIGHT MARK",
+   "action": "delete"
+  },
+  {
+   "cp": "U+200F",
+   "name": "RIGHT-TO-LEFT MARK",
+   "action": "delete"
+  },
+  {
+   "cp": "U+E0000-U+E007F",
+   "name": "TAG CHARACTERS (unsichtbares ASCII)",
+   "action": "delete"
+  },
+  {
+   "cp": "U+00A0",
+   "name": "NO-BREAK SPACE (geschütztes Leerzeichen)",
+   "action": "space"
+  },
+  {
+   "cp": "U+202F",
+   "name": "NARROW NO-BREAK SPACE",
+   "action": "space"
+  },
+  {
+   "cp": "U+2009",
+   "name": "THIN SPACE",
+   "action": "space"
+  },
+  {
+   "cp": "U+2007",
+   "name": "FIGURE SPACE",
+   "action": "space"
+  },
+  {
+   "cp": "U+2003",
+   "name": "EM SPACE",
+   "action": "space"
+  },
+  {
+   "cp": "U+2002",
+   "name": "EN SPACE",
+   "action": "space"
+  }
+ ],
+ "typographic": [
+  {
+   "from": "—",
+   "name": "GEVIERTSTRICH (em dash)",
+   "to": ", "
+  },
+  {
+   "from": "–",
+   "name": "HALBGEVIERTSTRICH / Gedankenstrich (en dash)",
+   "to": "-"
+  },
+  {
+   "from": "„",
+   "name": "DEUTSCHES ANFÜHRUNGSZEICHEN UNTEN",
+   "to": "\""
+  },
+  {
+   "from": "“",
+   "name": "ANFÜHRUNGSZEICHEN OBEN LINKS",
+   "to": "\""
+  },
+  {
+   "from": "”",
+   "name": "ANFÜHRUNGSZEICHEN OBEN RECHTS",
+   "to": "\""
+  },
+  {
+   "from": "‚",
+   "name": "EINFACHES ANFÜHRUNGSZEICHEN UNTEN",
+   "to": "'"
+  },
+  {
+   "from": "‘",
+   "name": "EINFACHES ANFÜHRUNGSZEICHEN LINKS",
+   "to": "'"
+  },
+  {
+   "from": "’",
+   "name": "EINFACHES ANFÜHRUNGSZEICHEN RECHTS / Apostroph",
+   "to": "'"
+  },
+  {
+   "from": "…",
+   "name": "AUSLASSUNGSPUNKTE (ein Zeichen)",
+   "to": "..."
+  },
+  {
+   "from": "′",
+   "name": "PRIME",
+   "to": "'"
+  },
+  {
+   "from": "·",
+   "name": "MITTELPUNKT",
+   "to": "-"
+  },
+  {
+   "from": "•",
+   "name": "AUFZÄHLUNGSPUNKT",
+   "to": "-"
+  },
+  {
+   "from": "→",
+   "name": "PFEIL NACH RECHTS",
+   "to": "->"
+  },
+  {
+   "from": "ß",
+   "name": "SCHARFES S (in der Schweiz: ss)",
+   "to": "ss"
+  },
+  {
+   "from": "ẞ",
+   "name": "GROSSES SCHARFES S (in der Schweiz: SS)",
+   "to": "SS"
+  }
+ ],
+ "words": [
+  {
+   "find": "nahtlos",
+   "replace": "reibungslos",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "massgeschneidert",
+   "replace": "passend",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "maßgeschneidert",
+   "replace": "passend",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "ganzheitlich",
+   "replace": "komplett",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "innovativ",
+   "replace": "neu",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "revolutionär",
+   "replace": "neu",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "bahnbrechend",
+   "replace": "neu",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "wegweisend",
+   "replace": "wichtig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "transformativ",
+   "replace": "grundlegend",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "zukunftssicher",
+   "replace": "langlebig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "unerlässlich",
+   "replace": "nötig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "essenziell",
+   "replace": "wichtig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "essentiell",
+   "replace": "wichtig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "entscheidend",
+   "replace": "wichtig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "massgeblich",
+   "replace": "wichtig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "maßgeblich",
+   "replace": "wichtig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "vielschichtig",
+   "replace": "komplex",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "facettenreich",
+   "replace": "vielseitig",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "robust",
+   "replace": "solid",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "kraftvoll",
+   "replace": "stark",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "nachhaltig",
+   "replace": "dauerhaft",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "unvergleichlich",
+   "replace": "besonders",
+   "family": "Adjektive",
+   "flex": true
+  },
+  {
+   "find": "erstklassig",
+   "replace": "sehr gut",
+   "family": "Adjektive",
+   "flex": false
+  },
+  {
+   "find": "Game-Changer",
+   "replace": "Wendepunkt",
+   "family": "Nomen",
+   "flex": false
+  },
+  {
+   "find": "Gamechanger",
+   "replace": "Wendepunkt",
+   "family": "Nomen",
+   "flex": false
+  },
+  {
+   "find": "Game Changer",
+   "replace": "Wendepunkt",
+   "family": "Nomen",
+   "flex": false
+  },
+  {
+   "find": "Herzstück",
+   "replace": "Zentrum",
+   "family": "Nomen",
+   "flex": false
+  },
+  {
+   "find": "Paradigmenwechsel",
+   "replace": "Umbruch",
+   "family": "Nomen",
+   "flex": false
+  },
+  {
+   "find": "Mehrwert",
+   "replace": "Nutzen",
+   "family": "Nomen",
+   "flex": false
+  },
+  {
+   "find": "Mindset",
+   "replace": "Denken",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "Deep Dive",
+   "replace": "Blick",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "Deep-Dive",
+   "replace": "Blick",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "Insights",
+   "replace": "Einblicke",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "Learnings",
+   "replace": "Lehren",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "Key Takeaways",
+   "replace": "Erkenntnisse",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "Best Practices",
+   "replace": "bewährte Methoden",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "leveragen",
+   "replace": "nutzen",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "geleveraged",
+   "replace": "genutzt",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "empowern",
+   "replace": "stärken",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "empowert",
+   "replace": "stärkt",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "connecten",
+   "replace": "vernetzen",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "revolutionieren",
+   "replace": "verändern",
+   "family": "Verben",
+   "flex": false
+  },
+  {
+   "find": "revolutioniert",
+   "replace": "verändert",
+   "family": "Verben",
+   "flex": false
+  },
+  {
+   "find": "revolutionierte",
+   "replace": "veränderte",
+   "family": "Verben",
+   "flex": false
+  },
+  {
+   "find": "darüber hinaus",
+   "replace": "ausserdem",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "des Weiteren",
+   "replace": "ausserdem",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "nichtsdestotrotz",
+   "replace": "trotzdem",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "nichtsdestoweniger",
+   "replace": "trotzdem",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "letztendlich",
+   "replace": "am Ende",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "zweifellos",
+   "replace": "sicher",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "zweifelsohne",
+   "replace": "sicher",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "nicht zuletzt",
+   "replace": "auch",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "gewissermassen",
+   "replace": "quasi",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "gewissermaßen",
+   "replace": "quasi",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "insbesondere",
+   "replace": "vor allem",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "folglich",
+   "replace": "also",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "hierbei",
+   "replace": "dabei",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "diesbezüglich",
+   "replace": "dazu",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "im Wesentlichen",
+   "replace": "im Kern",
+   "family": "Füllwörter",
+   "flex": false
+  },
+  {
+   "find": "fortan",
+   "replace": "ab jetzt",
+   "family": "Füllwörter",
+   "flex": false
+  }
+ ],
+ "phrases": [
+  {
+   "find": "in der heutigen schnelllebigen Welt",
+   "replace": "heute",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "in unserer schnelllebigen Welt",
+   "replace": "heute",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "in der heutigen digitalen Welt",
+   "replace": "heute",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "in der heutigen Zeit",
+   "replace": "heute",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "im heutigen digitalen Zeitalter",
+   "replace": "heute",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "im digitalen Zeitalter",
+   "replace": "heute",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "in einer Welt, in der",
+   "replace": "wenn",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "in der digitalen Landschaft",
+   "replace": "online",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "die digitale Landschaft",
+   "replace": "das Internet",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "in einem dynamischen Marktumfeld",
+   "replace": "im Markt",
+   "family": "Floskel-Einstiege",
+   "flex": false
+  },
+  {
+   "find": "am Ende des Tages",
+   "replace": "am Ende",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "spielt eine entscheidende Rolle",
+   "replace": "ist sehr wichtig",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "spielen eine entscheidende Rolle",
+   "replace": "sind sehr wichtig",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "spielt eine zentrale Rolle",
+   "replace": "ist zentral",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "spielen eine zentrale Rolle",
+   "replace": "sind zentral",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "von entscheidender Bedeutung",
+   "replace": "sehr wichtig",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "von zentraler Bedeutung",
+   "replace": "zentral",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "von grosser Bedeutung",
+   "replace": "wichtig",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "von großer Bedeutung",
+   "replace": "wichtig",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "macht den entscheidenden Unterschied",
+   "replace": "zählt am meisten",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "macht den Unterschied",
+   "replace": "zählt",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "machen den Unterschied",
+   "replace": "zählen",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "der Schlüssel zum Erfolg",
+   "replace": "der wichtigste Punkt",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "ein Zeugnis für",
+   "replace": "ein Beweis für",
+   "family": "Aufblähung",
+   "flex": false
+  },
+  {
+   "find": "eine Win-win-Situation",
+   "replace": "ein Gewinn für beide Seiten",
+   "family": "Anglizismen",
+   "flex": false
+  },
+  {
+   "find": "eine spannende Reise",
+   "replace": "eine spannende Zeit",
+   "family": "LinkedIn-Floskeln",
+   "flex": false
+  },
+  {
+   "find": "lass das mal sacken",
+   "replace": "",
+   "family": "LinkedIn-Floskeln",
+   "flex": false
+  },
+  {
+   "find": "lass das sacken",
+   "replace": "",
+   "family": "LinkedIn-Floskeln",
+   "flex": false
+  },
+  {
+   "find": "lassen Sie das sacken",
+   "replace": "",
+   "family": "LinkedIn-Floskeln",
+   "flex": false
+  },
+  {
+   "find": "lassen Sie das kurz sacken",
+   "replace": "",
+   "family": "LinkedIn-Floskeln",
+   "flex": false
+  }
+ ],
+ "structures": [
+  {
+   "id": "nicht-um-sondern",
+   "regex": "(?i)\\bes geht nicht (?:nur |bloss |bloß |einfach )?um\\b[^.!?\\n]{2,80}?(?:,\\s*sondern\\b|[.!]\\s*es geht um\\b)",
+   "name": "«Es geht nicht um X, sondern um Y»",
+   "fix": "Sag das Y direkt. Die Gegenüberstellung ist das Erkennungszeichen."
+  },
+  {
+   "id": "nicht-nur",
+   "regex": "(?i)\\bnicht nur\\b[^.!?\\n]{2,80}\\bsondern auch\\b",
+   "name": "«Nicht nur X, sondern auch Y»",
+   "fix": "Zwei Sätze daraus machen oder die schwächere Hälfte streichen."
+  },
+  {
+   "id": "das-ist-kein",
+   "regex": "(?i)\\b(?:das|es|dies) ist (?:kein|keine|nicht)\\b[^.!?\\n]{2,60}[.!]\\s*(?:es|das|dies) ist\\b",
+   "name": "«Das ist kein X. Das ist Y.»",
+   "fix": "Mit Y anfangen. Die Umkehrung verrät die Maschine."
+  },
+  {
+   "id": "enthuellungsfrage",
+   "regex": "(?im)^\\s*(?:das ergebnis|der haken|das beste daran|der clou|die lösung|die loesung|der grund|die antwort|das problem|und jetzt|warum|wieso|der twist)\\?\\s*$",
+   "name": "Ein-Wort-Enthüllungsfrage als eigene Zeile",
+   "fix": "Direkt im Satz beantworten statt eine Enthüllung zu inszenieren."
+  },
+  {
+   "id": "gelernt",
+   "regex": "(?i)\\b(?:hier ist,? was (?:ich|wir) gelernt|das habe ich (?:daraus )?gelernt|das haben wir (?:daraus )?gelernt|was ich daraus gelernt habe|meine (?:wichtigsten )?learnings)\\b",
+   "name": "«Das habe ich gelernt:»",
+   "fix": "Die Lehre einfach sagen. Die Ankündigung streichen."
+  },
+  {
+   "id": "dreier",
+   "regex": "(?i)\\b\\w+, \\w+ und \\w+[.!]",
+   "name": "Dreierreihe (A, B und C.)",
+   "fix": "Zwei Punkte oder vier. Drei ist der Standardrhythmus der Maschine."
+  },
+  {
+   "id": "rakete",
+   "regex": "[\\U0001F680\\U0001F525\\U0001F4A1\\u2728\\U0001F3AF]",
+   "name": "Raketen- / Feuer- / Glühbirnen- / Funkel- / Zielscheiben-Emoji",
+   "fix": "Höchstens ein Emoji, und keines von diesen fünf."
+  },
+  {
+   "id": "emoji-liste",
+   "regex": "(?m)(?:^[ \\t]*(?:\\u2705|\\U0001F449|\\U0001F539|\\U0001F538|\\u25B6\\uFE0F?|\\u27A1\\uFE0F?|\\u2714\\uFE0F?|\\U0001F4CC|\\U0001F447)[^\\n]*(?:\\n|$)){3,}",
+   "name": "Emoji-Aufzählung (✅ 👉 🔹 ...)",
+   "fix": "Normale Bindestriche oder ein kurzer Absatz."
+  },
+  {
+   "id": "hashtag-wand",
+   "regex": "(?:#\\w+[ \\t]*){5,}",
+   "name": "Hashtag-Wand (5+)",
+   "fix": "Drei Hashtags. Die Wand bringt auf LinkedIn nichts mehr."
+  },
+  {
+   "id": "als-ki",
+   "regex": "(?i)\\bals (?:eine )?KI(?![-\\w])|\\bals (?:ein )?Sprachmodell\\b",
+   "name": "Selbstbezug des Modells",
+   "fix": "Satz löschen."
+  },
+  {
+   "id": "fazit",
+   "regex": "(?im)^\\s*(?:fazit|zusammenfassend|abschliessend|abschließend|kurz gesagt|unterm strich|alles in allem|zum schluss)\\b",
+   "name": "Aufsatz-Schluss («Fazit:», «Zusammenfassend»)",
+   "fix": "Ein Beitrag braucht keinen Schlussabsatz. Streichen oder als echte Wendung schreiben."
+  },
+  {
+   "id": "koeder",
+   "regex": "(?im)(?:was denkt ihr|was meint ihr|wie seht ihr das|was sagt ihr|wie sehen sie das|was denken sie|was meinen sie|wer kennt(?:'s| es| das)|eure meinung|ihre meinung|stimmt ihr zu|stimmen sie zu|bin ich der einzige|bin ich die einzige|seht ihr das auch so|sehen sie das auch so)\\s*\\?[^\\S\\n]*\\S{0,3}[^\\S\\n]*$",
+   "name": "Reflex-Engagement-Köder («Was denkt ihr?»)",
+   "fix": "Eine Frage stellen, die nur dieser Beitrag stellen kann, zum konkreten Punkt darüber."
+  },
+  {
+   "id": "freue-mich",
+   "regex": "(?i)\\b(?:ich freue mich|wir freuen uns)\\b[^.!?\\n]{0,50}\\b(?:mitzuteilen|mitteilen|bekanntzugeben|bekannt zu geben|zu verkünden|verkünden|anzukündigen)\\b",
+   "name": "«Wir freuen uns, mitteilen zu dürfen»",
+   "fix": "Direkt sagen, was passiert ist. Die Freude zeigt sich im Inhalt."
+  },
+  {
+   "id": "wichtig-zu-beachten",
+   "regex": "(?i)\\bes ist (?:wichtig|entscheidend|essenziell|essentiell|unerlässlich|wesentlich) zu (?:beachten|betonen|erwähnen|verstehen|wissen)\\b",
+   "name": "«Es ist wichtig zu beachten, dass»",
+   "fix": "Streichen und den Punkt als Hauptsatz sagen."
+  },
+  {
+   "id": "eintauchen",
+   "regex": "(?i)\\b(?:tauchen wir (?:gemeinsam )?ein|lass(?:t)? uns (?:gemeinsam )?eintauchen|lassen sie uns (?:gemeinsam )?eintauchen|tauchen sie ein)\\b",
+   "name": "«Tauchen wir ein»",
+   "fix": "Ohne Anlauf direkt mit dem Inhalt anfangen."
+  },
+  {
+   "id": "next-level",
+   "regex": "(?i)\\b(?:aufs|auf das|auf ein) (?:nächste|naechste|neue|höhere)s? (?:level|stufe)\\b|\\bdas (?:volle|ganze|gesamte) potenzial\\b",
+   "name": "«aufs nächste Level» / «das volle Potenzial»",
+   "fix": "Sagen, was konkret besser wird, am besten mit Zahl."
+  },
+  {
+   "id": "stell-dir-vor",
+   "regex": "(?im)^\\s*(?:stell dir vor|stellen sie sich vor|stellt euch vor)\\b",
+   "name": "«Stellen Sie sich vor ...»-Einstieg",
+   "fix": "Mit der echten Szene anfangen, nicht mit einer ausgedachten."
+  },
+  {
+   "id": "genau-hier",
+   "regex": "(?i)\\bgenau (?:hier|da|dort) (?:setz\\w*|komm\\w*) \\w+ (?:an|ins spiel)\\b",
+   "name": "«Genau hier setzen wir an»",
+   "fix": "Agentur-Floskel. Sagen, was ihr konkret tut."
+  },
+  {
+   "id": "wussten-sie",
+   "regex": "(?im)^\\s*(?:wusstest du|wusstet ihr|wussten sie),? dass\\b",
+   "name": "«Wussten Sie, dass ...»-Einstieg",
+   "fix": "Die Tatsache selbst als ersten Satz bringen."
+  }
+ ],
+ "orte": [
+  "Zürich",
+  "Zuerich",
+  "Zug",
+  "Bern",
+  "Basel",
+  "Luzern",
+  "Winterthur",
+  "St. Gallen",
+  "Aarau",
+  "Baden",
+  "Schaffhausen",
+  "Chur",
+  "Thun",
+  "Biel",
+  "Solothurn",
+  "Olten",
+  "Wil",
+  "Uster",
+  "Dübendorf",
+  "Kloten",
+  "Glattbrugg",
+  "Opfikon",
+  "Wallisellen",
+  "Bülach",
+  "Dietikon",
+  "Wetzikon",
+  "Rapperswil",
+  "Frauenfeld",
+  "Kreuzlingen",
+  "Vaduz",
+  "Schaan",
+  "Liechtenstein",
+  "Schweiz",
+  "Zürcher Unterland",
+  "Glatttal",
+  "Fluntern",
+  "Seebach",
+  "Oerlikon",
+  "Altstetten",
+  "Genf",
+  "Lausanne",
+  "Lugano",
+  "Aargau",
+  "Thurgau",
+  "Graubünden",
+  "Wallis",
+  "Tessin"
+ ],
+ "marken": [
+  "Google",
+  "Google Maps",
+  "Maps",
+  "Google Ads",
+  "ChatGPT",
+  "Gemini",
+  "Perplexity",
+  "Copilot",
+  "OpenAI",
+  "LinkedIn",
+  "Instagram",
+  "Facebook",
+  "WhatsApp",
+  "YouTube",
+  "TikTok",
+  "Apple",
+  "Bing",
+  "Siri",
+  "Swisscom",
+  "Local.ch",
+  "search.ch",
+  "Twint",
+  "digitalONLY"
+ ]
+}
